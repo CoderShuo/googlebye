@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {auth} from '../config/firebase';
 import * as firebase from 'firebase'
-
+import './style.css'
+import {Link} from 'react-router-dom'
 
 class Login extends Component {
 
     render(){
+        console.log("hello everyone")
         return (
             <div className="Signcontainer">
                 <div className="banner">Welcome to Googlebye</div>
@@ -27,15 +29,9 @@ class Login extends Component {
                 <div className="Card Login-socialLogin">
                     <span> other login methods
                         <span className="Login-socialButtonGroup">
-                            <div class="Login-socialButton">
-                                <button id="btnfb" className="btn btn-action">
-                                <div className="button-content">
-                                    <img src="/images/facebook.png" alt="facebook"/>
-                                    <div class="button-text svelte-ol2sdn">
-                                        <span class="button-type svelte-ol2sdn">Facebook</span>
-                                    </div>
-                                </div>
-                                </button>
+                            <div className="Login-socialButton">
+                                <button id="btnfb" className="btn btn-action">Facebook</button>
+                                <button id="btngg" className="btn btn-action">Google</button>
                             </div>
                         </span>
                     </span>
@@ -52,6 +48,7 @@ class Login extends Component {
         const btnSignUp = document.getElementById('btnSignUp')
         const btnLogout = document.getElementById('btnLogout')
         const btnfb = document.getElementById('btnfb')
+        const btngg = document.getElementById('btngg')
         // Add signin event
         btnLogin.addEventListener('click',e=>{
             const email = txtEmail.value;
@@ -81,6 +78,7 @@ class Login extends Component {
                 console.log(firebaseUser);
                 btnLogout.classList.remove('hide')
                 window.alert("Login successed!")
+                window.location.assign("/index");
             }else{
                 console.log("not logged in")
                 btnLogout.classList.add('hide')
@@ -88,11 +86,30 @@ class Login extends Component {
         })
         btnfb.addEventListener("click",e=>{
             var provider = new firebase.auth.FacebookAuthProvider;
-            provider.addScope('user_birthday')
-            auth.languageCode = "fr_FR"
 
             firebase.auth().signInWithPopup(provider).then(function(result) {
                 // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+                var token = result.credential.accessToken;
+                // The signed-in user info.
+                var user = result.user;
+                // ...
+              }).catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // The email of the user's account used.
+                var email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                var credential = error.credential;
+                // ...
+              });
+        })
+
+        btngg.addEventListener("click",e=>{
+            var provider = new firebase.auth.GoogleAuthProvider();
+
+            firebase.auth().signInWithPopup(provider).then(function(result) {
+                // This gives you a Google Access Token. You can use it to access the Google API.
                 var token = result.credential.accessToken;
                 // The signed-in user info.
                 var user = result.user;

@@ -38,9 +38,7 @@ input#todoNext:active {
     margin-left: 1;
   }
 }
-.hide{
-  display:none;
-}
+
 
 .Signcontainer {
   position: relative;
@@ -70,4 +68,8 @@ input#todoNext:active {
   {
     color: #fff;
     background-color: #0084ff;
+}
+
+.hide{
+  display:none;
 }

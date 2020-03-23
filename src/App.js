@@ -1,13 +1,21 @@
 import React, {Component} from 'react';
-import List from './components/List';
 import Login from './components/Login'
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import frontpage from './components/frontpage';
+
 
 class App extends Component {
   render() {
+    console.log("appjs")
     return (
-      <div className="container">
-        <Login/>
-      </div>
+      <Router>
+        <div className="container">
+          <Switch>
+            <Route path='/' exact component={Login} />
+            <Route path='/index' component={frontpage} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
