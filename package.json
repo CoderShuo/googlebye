@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "firebase": "^5.7.2",
+    "firebase-paginator": "^1.1.2",
     "lodash": "^4.17.11",
     "materialize-css": "^1.0.0",
     "react": "^16.7.0",
