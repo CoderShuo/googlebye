@@ -1,0 +1,25 @@
+
+
+
+p{
+    font: 15px Helvetica,Arial,sans-serif;
+}
+
+.movie-detail{
+    text-align: left;
+}
+
+textarea {
+    resize : none;
+    margin-right: 20px;
+
+
+}
+select{
+    vertical-align: top;  
+}
+
+.item{
+    display: block;
+    margin: auto;
+}
