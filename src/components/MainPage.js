@@ -1,236 +1,76 @@
 import React, {Component} from 'react';
 import {auth} from '../config/firebase';
 import * as firebase from 'firebase'
-import './style.css'
+import './style_MainPage.css'
 import {firestore} from '../config/firebase'
 
 class MainPage extends Component {
   constructor(props){
     super(props);
     this.state={
-        page: 1,
-        limit: 4,
-        movies: [],
+      page: 1,
+      limit: 15,
+      movies: [],
     }
   }
   render(){
-
     console.log("current state = ", this.state.page)
     console.log(this.state.movies)
     return (
-      <div id="page">
-        <button id="pre" disabled={this.state.page==1}>pre</button>
-        <button id="1">1</button>
-        <button id="2">2</button>
-        <button id="3">3</button>
-        <button id="4">4</button>
-        <button id="5">5</button>
-        <button id="6">6</button>
-        <button id="7">7</button>
-        <button id="8">8</button>
-        <button id="9">9</button>
-        <button id="next">next</button>
-      </div>
-    )
-  }
-  render1(){
-    return (
       <div class="container">
-          <div class="header_top">
-            <div class="col-sm-3 logo"><a href="index.html"><img src="images/logo.png" alt=""/></a></div>
-              <div class="col-sm-6 nav">
-                <ul>
-                  <li> <span class="simptip-position-bottom simptip-movable" data-tooltip="comic"><a href="movie.html"> </a></span></li>
-                  <li><span class="simptip-position-bottom simptip-movable" data-tooltip="movie"><a href="movie.html"> </a> </span></li>
-                  <li><span class="simptip-position-bottom simptip-movable" data-tooltip="video"><a href="movie.html"> </a></span></li>
-                  <li><span class="simptip-position-bottom simptip-movable" data-tooltip="game"><a href="movie.html"> </a></span></li>
-                  <li><span class="simptip-position-bottom simptip-movable" data-tooltip="tv"><a href="movie.html"> </a></span></li>
-                  <li><span class="simptip-position-bottom simptip-movable" data-tooltip="more"><a href="movie.html"> </a></span></li>
-                </ul>
-              </div>
-              <div class="col-sm-3 header_right">
-                 <ul class="header_right_box">
-                 <li><img src="images/p1.png" alt=""/></li>
-                 <li><p><a href="login.html">Carol Varois</a></p></li>
-                 <li class="last"><i class="edit"> </i></li>
-                 <div class="clearfix"> </div>
-                 </ul>
-              </div>
-              <div class="clearfix"> </div>
-            </div>
-            <div class="slider">
-              <div class="callbacks_container">
-                <ul class="rslides" id="slider">
-                  <li><img src="images/banner.jpg" class="img-responsive" alt=""/>
-                    <div class="button">
-                      <a href="#" class="hvr-shutter-out-horizontal">Watch Now</a>
-                    </div>
-                  </li>
-                  <li><img src="images/banner1.jpg" class="img-responsive" alt=""/>
-                    <div class="button">
-                      <a href="#" class="hvr-shutter-out-horizontal">Watch Now</a>
-                    </div>
-                  </li>
-                  <li><img src="images/banner2.jpg" class="img-responsive" alt=""/>
-                    <div class="button">
-                    <a href="#" class="hvr-shutter-out-horizontal">Watch Now</a>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="banner_desc">
-                    <div class="col-md-9">
-                      <ul class="list_1">
-                        <li>Published <span class="m_1">Feb 20, 2015</span></li>
-                        <li>Updated <span class="m_1">Feb 20 2015</span></li>
-                        <li>Rating <span class="m_1"><img src="images/rating.png" alt=""/></span></li>
-                      </ul>
-                    </div>
-                    <div class="col-md-3 grid_1">
-                      <ul class="list_1 list_2">
-                        <li><i class="icon1"> </i><p>2,548</p></li>
-                        <li><i class="icon2"> </i><p>215</p></li>
-                        <li><i class="icon3"> </i><p>546</p></li>
-                      </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="content">
-              <div class="box_1">
-               <h1 class="m_2">Featurd Movies</h1>
-               <div class="search">
-              <form>
-              <input type="text" value="Search..." onfocus="this.value='';" onblur="if (this.value == '') {this.value ='';}"></input>
-              <input type="submit" value=""></input>
-              </form>
-            </div>
-            <div class="clearfix"> </div>
-          </div>
-          <div class="box_2">
-            <div class="col-md-5 grid_3">
-              <div class="row_1">
-                <div class="col-md-6 grid_4">
-                  <a href="single.html">
-                    <div class="grid_2">
-                      <img src="images/pic1.jpg" class="img-responsive" alt=""/>
-                      <div class="caption1">
-                      <ul class="list_3">
-                        <li><i class="icon5"> </i><p>3,548</p></li>
-                      </ul>
-                      <i class="icon4"> </i>
-                      <p class="m_3">Guardians of the Galaxy</p>
-                      </div>
-                    </div>
-                    <div class="grid_2 col_1">
-                      <img src="images/pic2.jpg" class="img-responsive" alt=""/>
-                      <div class="caption1">
-                        <ul class="list_3">
-                          <li><i class="icon5"> </i><p>3,548</p></li>
-                        </ul>
-                        <i class="icon4"> </i>
-                        <p class="m_3">Guardians of the Galaxy</p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-md-6 grid_7">
-                  <div class="col_2">
-                    <ul class="list_4">
-                      <li><i class="icon1"> </i><p>2,548</p></li>
-                      <li><i class="icon2"> </i><p>215</p></li>
-                      <li><i class="icon3"> </i><p>546</p></li>
-                      <li>Rating : &nbsp;&nbsp;<p><img src="images/rating1.png" alt=""/></p></li>
-                      <li>Release Date : &nbsp;<span class="m_4">Mar 15, 2015</span> </li>
-                      <div class="clearfix"> </div>
-                    </ul>
-                    <div class="m_5"><a href="single.html"><img src="images/pic3.jpg" class="img-responsive" alt=""/></a></div>
-                  </div>
-                </div>
-                <div class="clearfix"> </div>
-              </div>
-              <div class="row_2">
-                <a href="single.html"><img src="images/pic4.jpg" class="img-responsive" alt=""/></a>
-              </div>
-            </div>
-            <div class="col-md-5 content_right">
-              <div class="row_3">
-                <div class="col-md-6 content_right-box">
-                  <a href="single.html">
-                    <div class="grid_2">
-                      <img src="images/pic6.jpg" class="img-responsive" alt=""/>
-                      <div class="caption1">
-                        <ul class="list_5">
-                          <li><i class="icon5"> </i><p>3,548</p></li>
-                        </ul>
-                        <i class="icon4 icon6"> </i>
-                        <p class="m_3">Guardians of the Galaxy</p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-md-6 grid_5">
-                  <a href="single.html">
-                    <div class="grid_2">
-                      <img src="images/pic7.jpg" class="img-responsive" alt=""/>
-                      <div class="caption1">
-                        <ul class="list_5">
-                          <li><i class="icon5"> </i><p>3,548</p></li>
-                        </ul>
-                        <i class="icon4 icon6"> </i>
-                        <p class="m_3">Guardians of the Galaxy</p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-                <div class="clearfix"> </div>
-              </div>
-              <div class="video">
-                <iframe width="100%" height="" src="https://www.youtube.com/embed/s1QeoSedWmM" frameborder="0" allowfullscreen></iframe>
-              </div>
-              <div class="row_5">
-                <div class="col-md-6">
-                  <div class="col_2">
-                      <ul class="list_4">
-                        <li><i class="icon1"> </i><p>2,548</p></li>
-                        <li><i class="icon2"> </i><p>215</p></li>
-                        <li><i class="icon3"> </i><p>546</p></li>
-                        <li>Rating : &nbsp;&nbsp;<p><img src="images/rating1.png" alt=""></img></p></li>
-                        <div class="clearfix"> </div>
-                      </ul>
-                  </div>
-                </div>
-                <div class="col-md-6 m_6">
-                  <a href="single.html">
-                    <img src="images/pic8.jpg" class="img-responsive" alt=""/>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2 grid_6">
-              <div class="m_7"><a href="single.html"><img src="images/pic9.jpg" class="img-responsive" alt=""/></a></div>
-              <div class="caption1">
-                <ul class="list_5">
-                  <li><i class="icon5"> </i><p>3,548</p></li>
-                </ul>
-                <i class="icon4 icon6"> </i>
-                <p class="m_3">Guardians of the Galaxy</p>
-              </div>
-              <div class="col_2 col_3">
-                <ul class="list_4">
-                  <li><i class="icon1"> </i><p>2,548</p></li>
-                  <li><i class="icon2"> </i><p>215</p></li>
-                  <li><i class="icon3"> </i><p>546</p></li>
-                  <li>Rating : &nbsp;&nbsp;<p><img src="images/rating1.png" alt=""></img></p></li>
-                  <li>Release : &nbsp;<span class="m_4">Mar 15, 2015</span> </li>
-                  <div class="clearfix"> </div>
-                </ul>
-                <div class="m_8"><a href="single.html"><img src="images/pic10.jpg" class="img-responsive" alt=""/></a></div>
-              </div>
-            </div>
-          <div class="clearfix"> </div>
+        <header>
+          <center>
+            <ul>
+              <li><b>GoogleBye</b></li>
+              <li><a href="#">Movie</a>
+                <ul><li><a href="#">Best Movies</a></li><li><a href="#">Latest</a></li></ul>
+              </li>
+              <li><a href="#">Comments</a>
+                <ul><li><a href="#">Highest Rated</a></li><li><a href="#">Watched Most</a></li></ul>
+              </li>
+              <li><a href="#">My Page</a>
+                <ul><li><a href="#">Login</a></li><li><a href="#">Register</a></li></ul>
+              </li>
+            </ul>
+          </center>
+        </header>
+
+        <div class="masonry">
+          {this.getMovieDiv(this.state.movies[0])}
+          {this.getMovieDiv(this.state.movies[1])}
+          {this.getMovieDiv(this.state.movies[2])}
+          {this.getMovieDiv(this.state.movies[3])}
+          {this.getMovieDiv(this.state.movies[4])}
+          {this.getMovieDiv(this.state.movies[5])}
+          {this.getMovieDiv(this.state.movies[6])}
+          {this.getMovieDiv(this.state.movies[7])}
+          {this.getMovieDiv(this.state.movies[8])}
+          {this.getMovieDiv(this.state.movies[9])}
+          {this.getMovieDiv(this.state.movies[10])}
+          {this.getMovieDiv(this.state.movies[11])}
+          {this.getMovieDiv(this.state.movies[12])}
+          {this.getMovieDiv(this.state.movies[13])}
+          {this.getMovieDiv(this.state.movies[14])}
         </div>
+
+        <div id="page">
+          <button id="pre" disabled={this.state.page==1}>pre</button>
+          <button id="1">1</button>
+          <button id="2">2</button>
+          <button id="3">3</button>
+          <button id="4">4</button>
+          <button id="5">5</button>
+          <button id="6">6</button>
+          <button id="7">7</button>
+          <button id="8">8</button>
+          <button id="9">9</button>
+          <button id="next">next</button>
+        </div>
+
+        <footer>
+          <div>About us</div>
+        </footer>
       </div>
-    </div>
     )
   }
 
@@ -257,9 +97,7 @@ class MainPage extends Component {
   }
 
   componentDidMount(){
-
     var pageControl = document.getElementById("page")
-
     pageControl.addEventListener("click", (event)=>{
       var page = event.target.closest("button").id
       var jumpto
@@ -271,16 +109,96 @@ class MainPage extends Component {
       }
       else{
         jumpto = parseInt(page)
-    }
-    setTimeout(() => {
-      this.setState({
-        page:jumpto
-      })
-      this.gotoPage(this.state.page)
-    }, 500)
-   
-  })
+      }
+      setTimeout(() => {
+        this.setState({
+          page:jumpto
+        })
+        this.gotoPage(this.state.page)
+      }, 500)
+    })
   }
 
+  // getMovieSlide(movie){
+  //   if(movie){
+  //     return(
+  //       <div>
+  //         <div class="slideshow-container">
+  //           <div class="mySlides fade">
+  //             <div class="numbertext">1 / 3</div>
+  //             <img src={movie[0].img} style="width:100%"></img>
+  //             <div class="text">{movie[0].title}</div>
+  //           </div>
+           
+  //           <div class="mySlides fade">
+  //             <div class="numbertext">2 / 3</div>
+  //             <img src={movie[0].img} style="width:100%"></img>
+  //             <div class="text">{movie[0].title}</div>
+  //           </div>
+           
+  //           <div class="mySlides fade">
+  //             <div class="numbertext">3 / 3</div>
+  //             <img src={movie[0].img} style="width:100%"></img>
+  //             <div class="text">{movie[0].title}</div>
+  //           </div>
+           
+  //           <a class="prev" onclick="plusSlides(-1)">❮</a>
+  //           <a class="next" onclick="plusSlides(1)">❯</a>
+  //         </div>
+  //         <br />
+           
+  //         <div style="text-align:center">
+  //           <span class="dot" onclick="currentSlide(1)"></span> 
+  //           <span class="dot" onclick="currentSlide(2)"></span> 
+  //           <span class="dot" onclick="currentSlide(3)"></span> 
+  //         </div>
+  //       </div>
+  //     )
+  //   }
+  // }
+
+  // this.slideIndex = 1;
+  // showSlides(slideIndex);
+   
+  // function plusSlides(n) {
+  //   showSlides(slideIndex += n);
+  // }
+   
+  // function currentSlide(n) {
+  //   showSlides(slideIndex = n);
+  // }
+   
+  // function showSlides(n) {
+  //   var i;
+  //   var slides = document.getElementsByClassName("mySlides");
+  //   var dots = document.getElementsByClassName("dot");
+  //   if (n > slides.length) {slideIndex = 1} 
+  //   if (n < 1) {slideIndex = slides.length}
+  //   for (i = 0; i < slides.length; i++) {
+  //       slides[i].style.display = "none"; 
+  //   }
+  //   for (i = 0; i < dots.length; i++) {
+  //       dots[i].className = dots[i].className.replace(" active", "");
+  //   }
+  //   slides[slideIndex-1].style.display = "block"; 
+  //   dots[slideIndex-1].className += " active";
+  // }
+
+
+  getMovieDiv(movie){
+    if(movie){
+      return(
+        <div class>
+          <img src={movie.img} alt={movie.title} width='150'></img>
+          <div>
+            <b>{movie.title}</b> <br />
+            <b>{movie.actors}</b> <br />
+            <b>Release Date: {movie.releasedate}</b> <br />
+            <b>{movie.duration}</b>
+          </div>
+        </div>
+      )
+    }
+  }
 }
 export default MainPage

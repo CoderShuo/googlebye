@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {auth} from '../config/firebase';
 import * as firebase from 'firebase'
 import './style.css'
-import {firestore} from '../config/firebase'
 
 class Login extends Component {
 
@@ -18,24 +17,24 @@ class Login extends Component {
             </div>
             <div className="wrap-input">
               <span className="label-login">Password</span>
-              <input id = "txtPassword" className="input-login" placeholder = "Password" autocomplete="off"></input>
+              <input id = "txtPassword" className="input-login" placeholder = "Password" autoComplete="off"></input>
             </div>
-            <div class="text-right">
-              <a href="javascript:">Forgot your password?</a>
+            <div className="text-right">
+              <a>Forgot your password?</a>
             </div>
             <button id="btnLogin" className="login-button btn-action">Log in</button>
             <div className="text-center">
               <span>Login with ...</span>
             </div>
             <div className="wrap-login-with">
-              <a href="#" class="login-with bg1">
-                <i class="fa fa-facebook"></i>
+              <a href="#" className="login-with bg1">
+                <i className="fa fa-facebook"></i>
               </a>
-              <a href="#" class="login-with bg2">
-                <i class="fa fa-twitter"></i>
+              <a href="#" className="login-with bg2">
+                <i className="fa fa-twitter"></i>
               </a>
-              <a href="#" class="login-with bg3">
-                <i class="fa fa-google"></i>
+              <a href="#" className="login-with bg3">
+                <i className="fa fa-google"></i>
               </a>
             </div>
             <button id="btnSignUp" className="btn btn-action">Sign Up</button>
@@ -46,14 +45,12 @@ class Login extends Component {
             <div className="Card Login-socialLogin">
               <span> other login methods
                 <span className="Login-socialButtonGroup">
-                  <div class="Login-socialButton">
+                  <div className="Login-socialButton">
                     <button id="btnfb" className="btn btn-action">
-                    <div className="button-content">
-                      
-                      <div class="button-text svelte-ol2sdn">
-                        <span class="button-type svelte-ol2sdn">Facebook</span>
-                      </div>
-                    </div>
+                      Facebook
+                    </button>
+                    <button id="btngg" className="btn btn-action">
+                      Google
                     </button>
                   </div>
                 </span>
@@ -72,6 +69,7 @@ class Login extends Component {
     const btnSignUp = document.getElementById('btnSignUp')
     const btnLogout = document.getElementById('btnLogout')
     const btnfb = document.getElementById('btnfb')
+    const btngg = document.getElementById('btngg')
     // Add signin event
     btnLogin.addEventListener('click',e=>{
       const email = txtEmail.value;
@@ -112,13 +110,34 @@ class Login extends Component {
       provider.addScope('user_birthday')
       auth.languageCode = "fr_FR"
 
+      firebase.auth().signInWithPopup(provider)//.then(function(result) {
+        // // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        // var token = result.credential.accessToken;
+        // // The signed-in user info.
+        // var user = result.user;
+        // // ...
+        // }).catch(function(error) {
+        // // Handle Errors here.
+        // var errorCode = error.code;
+        // var errorMessage = error.message;
+        // // The email of the user's account used.
+        // var email = error.email;
+        // // The firebase.auth.AuthCredential type that was used.
+        // var credential = error.credential;
+        // // ...
+        //});
+    })
+    btngg.addEventListener("click",e=>{
+      console.log("click")
+      var provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider).then(function(result) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        console.log(result)
+        // This gives you a Google Access Token. You can use it to access the Google API.
         var token = result.credential.accessToken;
         // The signed-in user info.
         var user = result.user;
         // ...
-        }).catch(function(error) {
+      }).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -127,7 +146,7 @@ class Login extends Component {
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
         // ...
-        });
+      });
     })
     
     
