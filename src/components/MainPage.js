@@ -14,6 +14,7 @@ class MainPage extends Component {
     }
   }
   render(){
+    this.Pagerender(this.state.page)
     console.log("current state = ", this.state.page)
     console.log(this.state.movies)
     return (
@@ -36,35 +37,31 @@ class MainPage extends Component {
         </header>
 
         <div class="masonry">
-          {this.getMovieDiv(this.state.movies[0])}
-          {this.getMovieDiv(this.state.movies[1])}
-          {this.getMovieDiv(this.state.movies[2])}
-          {this.getMovieDiv(this.state.movies[3])}
-          {this.getMovieDiv(this.state.movies[4])}
-          {this.getMovieDiv(this.state.movies[5])}
-          {this.getMovieDiv(this.state.movies[6])}
-          {this.getMovieDiv(this.state.movies[7])}
-          {this.getMovieDiv(this.state.movies[8])}
-          {this.getMovieDiv(this.state.movies[9])}
-          {this.getMovieDiv(this.state.movies[10])}
-          {this.getMovieDiv(this.state.movies[11])}
-          {this.getMovieDiv(this.state.movies[12])}
-          {this.getMovieDiv(this.state.movies[13])}
-          {this.getMovieDiv(this.state.movies[14])}
+          <div class="horizontal">
+            {this.getMovieDiv(this.state.movies[0])}
+            {this.getMovieDiv(this.state.movies[1])}
+            {this.getMovieDiv(this.state.movies[2])}
+            {this.getMovieDiv(this.state.movies[3])}
+            {this.getMovieDiv(this.state.movies[4])}
+          </div>
+          <div class="horizontal">
+            {this.getMovieDiv(this.state.movies[5])}
+            {this.getMovieDiv(this.state.movies[6])}
+            {this.getMovieDiv(this.state.movies[7])}
+            {this.getMovieDiv(this.state.movies[8])}
+            {this.getMovieDiv(this.state.movies[9])}
+          </div>
+          <div class="horizontal">
+            {this.getMovieDiv(this.state.movies[10])}
+            {this.getMovieDiv(this.state.movies[11])}
+            {this.getMovieDiv(this.state.movies[12])}
+            {this.getMovieDiv(this.state.movies[13])}
+            {this.getMovieDiv(this.state.movies[14])}
+          </div>
         </div>
 
         <div id="page">
-          <button id="pre" disabled={this.state.page==1}>pre</button>
-          <button id="1">1</button>
-          <button id="2">2</button>
-          <button id="3">3</button>
-          <button id="4">4</button>
-          <button id="5">5</button>
-          <button id="6">6</button>
-          <button id="7">7</button>
-          <button id="8">8</button>
-          <button id="9">9</button>
-          <button id="next">next</button>
+          {this.Pagerender(this.state.page)}
         </div>
 
         <footer>
@@ -98,6 +95,8 @@ class MainPage extends Component {
 
   componentDidMount(){
     var pageControl = document.getElementById("page")
+    var pageElements = this.Pagerender(this.state.page)
+    console.log(pageControl)
     pageControl.addEventListener("click", (event)=>{
       var page = event.target.closest("button").id
       var jumpto
@@ -110,6 +109,7 @@ class MainPage extends Component {
       else{
         jumpto = parseInt(page)
       }
+      
       setTimeout(() => {
         this.setState({
           page:jumpto
@@ -184,18 +184,36 @@ class MainPage extends Component {
   //   dots[slideIndex-1].className += " active";
   // }
 
-
+  Pagerender(page){
+    var from = parseInt(page/10)*10
+    var arr = [];
+    for(var i = from; i < from+10; i++){
+      arr.push(i);
+    }
+    var pagehtml = [
+      <button id="pre">pre</button>
+  ]
+    arr.map(x=>{
+      if(x===this.state.page){
+        pagehtml = [...pagehtml, <button id={x} style={{color:"#111"}}>{x}</button>]
+      }
+      else if(x>0){
+        pagehtml = [...pagehtml, <button id={x}>{x}</button>]
+      }
+      })
+    pagehtml = [...pagehtml, <button id="next">next</button>]
+    console.log(pagehtml)
+    return pagehtml
+  }
   getMovieDiv(movie){
     if(movie){
       return(
-        <div class>
+        <div class='item'>
           <img src={movie.img} alt={movie.title} width='150'></img>
-          <div>
-            <b>{movie.title}</b> <br />
-            <b>{movie.actors}</b> <br />
-            <b>Release Date: {movie.releasedate}</b> <br />
-            <b>{movie.duration}</b>
-          </div>
+          <p>
+            {movie.title}  
+            <strong>  {movie.score}</strong>
+          </p>
         </div>
       )
     }

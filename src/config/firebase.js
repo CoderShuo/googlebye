@@ -9,6 +9,6 @@ const settings = {
     timestampsInSnapshots: true
 };
 firestore.settings(settings);
-
+auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
 export {firestore}
 export {auth}

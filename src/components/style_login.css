@@ -1,0 +1,322 @@
+.to-do-list-container {
+  margin-top: 25px;
+}
+.to-do-list-item {
+  margin-top: 10px;
+  color: white;
+  transition: background-color 1s;
+}
+
+.to-do-list-item h4 {
+  padding-left: 25px;
+  padding-bottom: 5px;
+}
+
+.to-do-list-item:hover {
+  background-color: dodgerblue !important;
+}
+
+.complete-todo-item {
+  float: right;
+  right: 20px;
+}
+
+#todo-add-form {
+  animation: 1s;
+  animation-name: slidein;
+}
+
+input#todoNext:active {
+  border-bottom: 1px solid dodgerblue !important;
+}
+
+@keyframes slidein {
+  from {
+    opacity: 0;
+  }
+  to {
+    margin-left: 1;
+  }
+}
+
+
+.Signcontainer {
+  position: relative;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.1);
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.1);
+  overflow: hidden;
+  width: 100%;  
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  /*padding: 15px;*/
+  background-image: url('../images/bg-01.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.LoginTitle {
+  display: block;
+  font-family: Poppins-Bold;
+  font-size: 39px;
+  color: #333333;
+  line-height: 1.2;
+  text-align: center;
+  padding-bottom: 49px;
+}
+
+.wrap-login{
+  width: 500px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  padding-left: 55px;
+  padding-right: 55px;
+  padding-top: 65px;
+  padding-bottom: 54px;
+}
+
+.form-login{
+  width: 100%;
+}
+
+.label-login{
+  font-family: Poppins-Regular;
+  font-size: 16px;
+  color: #333333;
+  line-height: 1.5;
+  padding-left: 7px;
+}
+
+.input-login{
+  font-family: Poppins-Medium;
+  font-size: 16px;
+  color: #333333;
+  line-height: 1.2;
+
+  display: block;
+  width: 100%;
+  height: 40px;
+  background: transparent;
+  padding: 0 -7px 0 43px;
+}
+
+.wrap-input{
+  width: 100%;
+  position: relative;
+  border-bottom: 2px solid #d9d9d9;
+  margin-top: 20px;
+}
+
+.text-right{
+  text-align: right;
+  padding-top: 8px;
+  padding-bottom: 31px;
+}
+
+.login-button{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  height: 45px;
+  display: block;
+  position: relative;
+  z-index: 1;
+  border-radius: 25px;
+  overflow: hidden;
+  margin: 0 auto;
+  font-family: Poppins-Medium;
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.2;
+  text-transform: uppercase;
+  box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+  -moz-box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+  -webkit-box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+  -o-box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+  -ms-box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+}
+
+.text-center{
+  text-align: center;
+  padding-top: 54px;
+  padding-bottom: 10px;
+}
+
+.btn {
+  display: inline-block;
+  font-family: Poppins-Medium;
+  font-size: 16px;
+  padding: 0 16px;
+  font-size: 14px;
+  line-height: 32px;
+  color: #8590a6;
+  text-align: center;
+  cursor: pointer;
+  background: none;
+  border: 1px solid;
+  border-radius: 3px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 50%;
+  height: 45px;
+  position: relative;
+  z-index: 1;
+  border-radius: 25px;
+  color: #fff;
+  text-transform: uppercase;
+  box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+  -moz-box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+  -webkit-box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+  -o-box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+  -ms-box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
+}
+
+.btn-action{
+  color: #fff;
+  background-color: #0084ff;
+}
+
+.wrap-login-with{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+
+.login-with{
+  font-size: 18px;
+  color: #fff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 50px;
+  border-radius: 20%;
+  margin: 5px;
+}
+
+.bg1 {background-color: #3b5998}
+.bg2 {background-color: #1da1f2}
+.bg3 {background-color: #ea4335}
+
+.fa{
+  display: inline-block;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.login-with:hover {
+  color: #fff;
+  background-color: #333333;
+}
+
+
+.container-MainPage{
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  padding:5em 0;
+}
+@media (min-width: 768px) {
+  .container-MainPage {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container-MainPage {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container-MainPage {
+    width: 1170px;
+  }
+}
+
+.wrap-header{
+  background: #fff;
+  padding:2em 1em 1.8em;
+  border-top-left-radius: 3px;
+  -webkit-border-top-left-radius: 3px;
+  -moz-border-top-left-radius: 3px;
+  -o-border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -moz-border-top-right-radius: 3px;
+  -o-border-top-right-radius: 3px;
+}
+
+.logo{
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin:0 0 10px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .logo .navigator{
+    float: left;
+    width: 25%;
+  }
+}
+
+.navigator{
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  text-align:center;
+}
+.navigator ul{
+  padding:0;
+  margin:0;
+  list-style:none;
+}
+.navigator li{
+  margin: 0px 4% 0px 0;
+  display:inline-block;
+  margin: 0px 3% 0px 0;
+}
+.navigator li a {
+  height:30px;
+  width:30px;
+  display: block;
+}
+.navigator li a:hover {
+  zoom: 1;
+  filter: alpha(opacity=50);
+  opacity: 0.8;
+  -webkit-transition: opacity .15s ease-in-out;
+  -moz-transition: opacity .15s ease-in-out;
+  -ms-transition: opacity .15s ease-in-out;
+  -o-transition: opacity .15s ease-in-out;
+  transition: opacity .15s ease-in-out;
+}
