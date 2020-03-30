@@ -191,7 +191,7 @@ class MainPage extends Component {
       arr.push(i);
     }
     var pagehtml = [
-      <button id="pre">pre</button>
+      <button id="pre" disabled={page==1}>pre</button>
   ]
     arr.map(x=>{
       if(x===this.state.page){
