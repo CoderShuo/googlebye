@@ -1,44 +1,3 @@
-.to-do-list-container {
-  margin-top: 25px;
-}
-.to-do-list-item {
-  margin-top: 10px;
-  color: white;
-  transition: background-color 1s;
-}
-
-.to-do-list-item h4 {
-  padding-left: 25px;
-  padding-bottom: 5px;
-}
-
-.to-do-list-item:hover {
-  background-color: dodgerblue !important;
-}
-
-.complete-todo-item {
-  float: right;
-  right: 20px;
-}
-
-#todo-add-form {
-  animation: 1s;
-  animation-name: slidein;
-}
-
-input#todoNext:active {
-  border-bottom: 1px solid dodgerblue !important;
-}
-
-@keyframes slidein {
-  from {
-    opacity: 0;
-  }
-  to {
-    margin-left: 1;
-  }
-}
-
 
 .Signcontainer {
   position: relative;
@@ -66,6 +25,7 @@ input#todoNext:active {
 .LoginTitle {
   display: block;
   font-family: Poppins-Bold;
+  font-style: italic;
   font-size: 39px;
   color: #333333;
   line-height: 1.2;
@@ -186,20 +146,15 @@ input#todoNext:active {
   -ms-box-shadow: 0 5px 30px 0px rgba(3, 216, 222, 0.2);
 }
 
-.btn-action{
-  color: #fff;
-  background-color: #0084ff;
-}
-
 .wrap-login-with{
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  display:inline-block;
   display: flex;
   justify-content: center;
   -ms-align-items: center;
   align-items: center;
+  text-align:justify
 }
 
 .login-with{
@@ -212,10 +167,19 @@ input#todoNext:active {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 50px;
-  border-radius: 20%;
-  margin: 5px;
+  padding: 0.6rem;
+  width: 8.8rem;
+
+}
+.webpack{
+  color: #465A6F;
+  background-color: #fff;
+  margin-left: 1rem;
+}
+.webgap{
+  margin-left: 2rem;
+  margin-right: 1rem;
+  background-color: #157DC3;
 }
 
 .bg1 {background-color: #3b5998}
@@ -288,35 +252,97 @@ input#todoNext:active {
   }
 }
 
-.navigator{
-  position: relative;
-  min-height: 1px;
-  padding-right: 15px;
-  padding-left: 15px;
-  text-align:center;
+button{
+  border:none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size:1.25em;
+  font-weight: bold;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
 }
-.navigator ul{
-  padding:0;
-  margin:0;
-  list-style:none;
+
+.btn-action{
+  display: flex;
+  text-align: center;
+  background-color: #157DC3;
 }
-.navigator li{
-  margin: 0px 4% 0px 0;
-  display:inline-block;
-  margin: 0px 3% 0px 0;
+.button-content{
+  margin-left: 0.4rem;
 }
-.navigator li a {
-  height:30px;
-  width:30px;
-  display: block;
+span{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
 }
-.navigator li a:hover {
-  zoom: 1;
-  filter: alpha(opacity=50);
-  opacity: 0.8;
-  -webkit-transition: opacity .15s ease-in-out;
-  -moz-transition: opacity .15s ease-in-out;
-  -ms-transition: opacity .15s ease-in-out;
-  -o-transition: opacity .15s ease-in-out;
-  transition: opacity .15s ease-in-out;
+
+
+
+img.svelte{
+  width: 1.7rem;
+  height:1.7rem;
+}
+
+.container{
+  text-align: center;
+}
+
+.item { 
+    padding: 2em;
+    margin-bottom: 2em;
+    -moz-page-break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    break-inside: avoid;
+    display: inline-block;
+}
+footer{
+    bottom:0;
+    width:100%;
+    height:100px;
+    background:#00b2ff;
+}
+.horizontal{
+    display: flex;
+}
+
+
+.page{
+      text-align: center; /*让div内部文字居中*/
+    background-color: #fff;
+    border-radius: 20px;
+    width: 300px;
+    height: 350px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+/* button{
+  background-color: #00d8ff;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+} */
+
+.clicked{
+  color:#111
+}
+button:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+strong{
+  color: #e09015;
+}
+p{
+  color: #37a;
+}
+
+.Signtip{
+  font-size: 0.8rem;
+  font-family: fantasy;
 }

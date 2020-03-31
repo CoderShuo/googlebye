@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {auth} from '../config/firebase';
 import * as firebase from 'firebase'
-import './Moviedetail.css'
+import '../assets/css/Moviedetail.css'
 import {firestore} from '../config/firebase'
 
 class Moviedetail extends Component {
