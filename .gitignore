@@ -23,4 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # personal keys
-/src/config/keys.js
+src/config/dev.js
