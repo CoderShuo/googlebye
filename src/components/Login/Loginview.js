@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../assets/css/style_login.css'
+import '../../assets/css/style_login.css'
 import {logbtnfuction} from './Logincontainer'
 
 class Loginview extends Component {
@@ -17,29 +17,29 @@ class Loginview extends Component {
               <input id = "txtPassword" className="input-login" placeholder = "Password" type="password"></input>
             </div>
             <div className="text-right">
-              <a href="javascript:">Forgot your password?</a>
+              <a id="reset" href="javascript:">Forgot your password?</a>
             </div> 
             </form>
             <button id="btnLogin" className="login-button btn-action">Log in/Sign Up</button>
               
             <div className="wrap-login-with">
-              <span>Login with:</span>
+              <span><b>Login with:</b></span>
               <button id="btnfb" className="login-with webgap">
-                <img src= {require('../assets/images/facebook.png')}  className="svelte"/>
+                <img src= {require('../../assets/images/facebook.png')}  className="svelte"/>
                 <div className="button-content">
                   <span className="button-text svelte">Facebook</span>
                 </div>
               </button>
 
               <button id="btngg" className="login-with webpack">
-                <img src= {require('../assets/images/google.png')} className="svelte"/>
+                <img src= {require('../../assets/images/google.png')} className="svelte"/>
                 <div className="button-content">
                   <span className="button-text">Google</span>
                 </div>
               </button>
             </div>
             <div className="Signtip">
-              Sign up means you agree with our aggrement
+              Sign up means you agree with <u class="policy">our aggrement</u>
             </div>
         </div>
     </div>)

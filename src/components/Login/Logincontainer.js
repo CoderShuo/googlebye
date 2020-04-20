@@ -1,5 +1,5 @@
 
-import {auth} from '../config/firebase';
+import {auth} from '../../config/firebase';
 import * as firebase from 'firebase'
 
 export const logbtnfuction = ()=>{
@@ -7,8 +7,7 @@ export const logbtnfuction = ()=>{
         const txtEmail = document.getElementById('txtEmail')
         const txtPassword = document.getElementById('txtPassword')
         const btnLogin = document.getElementById('btnLogin')
-        const btnSignUp = document.getElementById('btnSignUp')
-        const btnLogout = document.getElementById('btnLogout')
+        const hreset = document.getElementById('reset')
         const btnfb = document.getElementById('btnfb')
         const btngg = document.getElementById('btngg')
         // Add signin event
@@ -17,7 +16,6 @@ export const logbtnfuction = ()=>{
           const pass = txtPassword.value;
           var userexist = true;
           // Sign in
-          console.log(txtEmail)
           auth.fetchSignInMethodsForEmail(email).then(
             result=>{
               console.log(result)
@@ -25,8 +23,15 @@ export const logbtnfuction = ()=>{
                 var flag = window.confirm("The user doesn't exist, do you want to create a new account?")
                 if(flag){
                   const promise = auth.createUserWithEmailAndPassword(email, pass)
+                  setTimeout(alert("Email sent, Please Check your mailbox to confirm your email"),5000)
+                  console.log(email)
+                  auth.currentUser.sendEmailVerification().then(function() {
+                      console.log("email sent")
+                    }).catch(function(error) {
+                      console.log(error)})
                   promise.catch(e=>console.log(e.message))
                 }
+
               }
               else{
                 const promise = auth.signInWithEmailAndPassword(email, pass)
@@ -40,7 +45,18 @@ export const logbtnfuction = ()=>{
             }
           )
         })
-    
+        hreset.addEventListener("click", e=>{
+          var auth = firebase.auth();
+          var emailAddress = txtEmail.value;
+          auth.sendPasswordResetEmail(emailAddress).then(function() {
+            console.log("Email sent to: ",emailAddress, ",Please Check your mailbox to reset your password")
+            // Email sent.
+          }).catch(function(error) {
+            // An error happened.
+            console.log(error)
+          });
+        }
+          )
     
         auth.onAuthStateChanged(firebaseUser=>{
           if(firebaseUser){
