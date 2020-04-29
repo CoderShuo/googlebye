@@ -3,7 +3,7 @@
   height: 900px;
 }
 header{
-  
+    padding: 20px 20px;
     height: auto; 
     width:100%;
     margin-left: 0;
@@ -69,6 +69,10 @@ textarea{
   height: 30px;
 }
 
+.searchbox{
+  display: inline-block;
+}
+
 .searchbutton{
   background-color: #00d8ff;
   color: white;
@@ -78,7 +82,25 @@ textarea{
   display: inline-block;
   font-size: 12px;
 }
+.userinfo{
+  display: inline-block;
+  align-items: center;
+  float: right;
+  margin-right: 100px;
+}
 
+.userimg{
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.username{
+  color: #2c0657;
+}
+
+ul{
+  display: inline;
+}
 select{
   border: none;
   outline: none;
@@ -191,3 +213,4 @@ input{
   color: #111;
   display: block;
 }
+

@@ -19,12 +19,9 @@ class MainPage extends Component {
   }
 
   render(){
-    var movies = this.state.movies
-    console.log(movies)
-    console.log(movies.length)
     console.log("current state = ", this.state.page)
     return (
-      MainPageview(this.state.movies, this.state.page, this.state.loading)
+      MainPageview(this.state.movies, this.state.page, this.state.loading, (query, page)=>this.searchMovie(query,page))
     )
   }
 
@@ -33,11 +30,23 @@ class MainPage extends Component {
     this.gotoPage(1)
   }
 
-  componentWillReceiveProps(){
-    var currentUser = firebase.auth().currentUser
-    console.log("currentUser:",currentUser)
-  }
+  searchMovie(query, page){
 
+    this.setState({
+      query: query,
+      loading:true
+    })
+    FetchData(page,query)
+    .then(data=>{
+      this.setState({
+        movies:data,
+        page:page,
+        loading: false,
+      })
+    })
+    .catch(err=>
+      console.log(err))
+  }
   gotoPage(page){
 
   // The way extract data from firebase
@@ -90,13 +99,17 @@ class MainPage extends Component {
         var page = event.target.previousElementSibling.value
         if (!page)
           return 
-        console.log("switch to page",page)
+        if(this.state.query){
+          this.searchMovie(this.state.query, parseInt(page))
+        }
+        else{
         this.gotoPage(parseInt(page))
+        }
         event.target.previousElementSibling.value=""
       }
 
       var pagebtn = event.target.closest("button")
-      if(!pagebtn)
+      if(!pagebtn) 
         return
 
       var page = pagebtn.id
@@ -112,10 +125,20 @@ class MainPage extends Component {
       }
       
       setTimeout(() => {
-        this.gotoPage(jumpto)
+        if(this.state.query){
+          this.searchMovie(this.state.query, jumpto)
+        }
+        else{
+        this.gotoPage(parseInt(jumpto))
+        }
       }, 500)
-    })
+    }
+  )
+  
 
+
+    //searchbtn.addEventListener('click',()=>{console.log(query)})
+  
   }
 
   

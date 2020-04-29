@@ -2,11 +2,10 @@ import React from 'react';
 import Navigator from './Navigator'
 import Footer from './Footer'
 
-export const MainPageview = (movies, page, loading)=>
+export const MainPageview = (movies, page, loading, searchmovie)=>
 {
 
   if (loading) {
-    console.log(loading,page)
     return(
       <div className="contrainer">
       <Navigator/>
@@ -20,7 +19,7 @@ export const MainPageview = (movies, page, loading)=>
   if(movies){
     return(
       <div class="container">
-        <Navigator/>
+        <Navigator funsearch={(query,page)=>searchmovie(query,page)}/>
         <div className="masonry" id="contents" onClick={Itemclick}>
           {movies.map(x=>{
             return getMovieDiv(x)
@@ -41,7 +40,11 @@ const getMovieDiv=(movie)=>{
   if(movie){
     return(
       <div className='item' id={movie.id}>
-        <img src={movie.img} alt={movie.title} className='poster'></img>
+        <img src={movie.img} 
+             alt={movie.title} 
+             className='poster'
+             onError={(e)=>{e.target.onerror = null; e.target.src="https://cdn.browshot.com/static/images/not-found.png"}}
+             ></img>
         <p>
           {movie.title} {'  '} 
           <strong>{movie.score}</strong>
@@ -76,9 +79,8 @@ const Pagerender=(page)=>{
 
 
 const Itemclick=(event)=>{
-  if(!event.target.closest("div") | event.target.closest("div").id.length<9)
+  if(event.target.closest("div").id =="contents")
     return
-  console.log(event.target.closest("div").id.length)
   var url = "/detail/" + event.target.closest("div").id
   //return(<Moviedetail></Moviedetail>)
   window.location.assign(url)

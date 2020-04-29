@@ -6,7 +6,6 @@ import Moviedetail from './components/Details/Moviedetail'
 
 class App extends Component {
   render() {
-    console.log("appjs")
     return (
       <Router>
         <div className="container">

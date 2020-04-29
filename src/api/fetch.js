@@ -1,12 +1,13 @@
-import {API_BASE_URL,CONTENT_BASE_URL, proxyUrl} from './setting'
+import {API_BASE_URL,CONTENT_BASE_URL, SEARCH_BASE_URL, IMG_ENDPOINT} from './setting'
 
-export const FetchData = (page)=>{
-    var url = proxyUrl+API_BASE_URL+'&page='+page
-
+export const FetchData = (page, query)=>{
+    var url = query ? (SEARCH_BASE_URL+'&page='+page).replace('%query%',query):(API_BASE_URL+'&page='+page).replace('%desc%','popularity.desc')
     var moviearr = []
     return(
     fetch(url,{
-        'origin':'https://developer.mozilla.org',
+        headers:{
+        "Origin":'https://developer.mozilla.org',
+        "Referer": 'https://developer.mozilla.org',}
     })
     .then(response=>response.json())
     .then(data=>data.results)
@@ -14,9 +15,9 @@ export const FetchData = (page)=>{
         movies.map(movie=>{
         moviearr.push({
             'id':movie.id,
-            'img':movie.posters.primary,
+            'img': IMG_ENDPOINT+movie.poster_path,
             'title':movie.title,
-            'score':movie.tomatoScore,
+            'score':movie.vote_average,
         })
       })
         return moviearr
@@ -25,7 +26,7 @@ export const FetchData = (page)=>{
 }
 
 export const FetchDetail = (id)=>{
-    var url = CONTENT_BASE_URL+ id
+    var url = CONTENT_BASE_URL.replace('%movieid%',id)
     var detail = []
     return(
     fetch(url)
@@ -33,19 +34,21 @@ export const FetchDetail = (id)=>{
     .then(movie=>{
         var movieinfo = {
             'id':movie.id,
-            'img':movie.imageUrl,
+            'img':IMG_ENDPOINT+movie.backdrop_path,
             'title':movie.title,
-            'score':movie.tomatometerScore,
-            'duration':movie.runningTime,
-            'description':movie.synopsis,
+            'score':movie.vote_average,
+            'duration':movie.runtime,
+            'description':movie.overview,
             'hotcomment':movie.criticConsensus,
             'rating':movie.mpaaRating,
             'actors':movie.actors,
-            'releasedate':movie.theaterReleaseDate,
+            'releasedate':movie.release_date,
         }
         return movieinfo
     }))
 }
+
+
 
 // function getDetails(id){
 //     var movie = {}

@@ -5,8 +5,9 @@ import {firestore} from '../../config/firebase'
 import {FetchDetail} from "../../api/fetch";
 import StarMarking from '../StarMarking'
 import Loader from 'react-loader-spinner'
+import Navigator from '../Mainpage/Navigator'
+import { Movie } from './Movie';
 
-const hctext = " No hotcomment yet, try to be the first one. :)"
 const ctext = "No user comments available, feel free to comment"
 
 class Moviedetail extends Component {
@@ -15,14 +16,19 @@ class Moviedetail extends Component {
      this.state={
        movie: [],
        loading:true,
+       tartId : window.location.href.split("/").pop(),
+       comments: [],
      }
 }
   render(){
-    var tartId = window.location.href.split("/").pop()
     var movie = this.state.movie
     if(this.state.loading)
       return(
-        <div>
+      <div>
+      <div>
+      <Navigator/> 
+      </div>
+      <div className="loading">
       <Loader
         type="Puff"
         color="#00BFFF"
@@ -32,35 +38,18 @@ class Moviedetail extends Component {
      />
      <span>The movie is on the way...</span>
      </div>
+     </div>
      )
     if(movie){
     return(
       <div>
-          <h1 className="title">{movie.title}</h1>
-          <div className="header">
-              <div className="Mainpic">
-                <img src={movie.img} alt={movie.title}></img>
-              </div>
-              <div className="movie-info">
-                    <span> <b>Score:</b> {movie.score}</span>
-                    <br/>
-                    <span> <b>Description:</b> {movie.description}</span>
-                    <br/>
-                    <span> <b>Hot comment:</b>{movie.hotcomment? movie.hotcomment:hctext}</span>
-                    <br/>
-                    <span> <b>Release date:</b>{movie.releasedate}</span>
-                    <br/>
-                    <span> <b>Duration:</b>{movie.duration}</span>
-                    <br/>
-                    <span> <b>Actors:</b>{movie.actors}</span>
-              </div>
-              <div class="clearfloat"></div>
-          </div>
-
+          <Navigator/>
+          <div className="detailpage">
+          {Movie(movie)}
           <div class="under">
             <div className="display-comments"> 
                   <span><b>Comments: </b> 
-                  {this.state.comments? this.commentsrender(this.state.comments.comments):ctext}</span>
+                  {this.state.comments? this.commentsrender(this.state.comments):ctext}</span>
             </div>
               <div className="user-comment">
                 <div className="editcomment"><span><b>Leave your own comments here: </b> </span></div>
@@ -71,7 +60,8 @@ class Moviedetail extends Component {
                     getScore={(item)=>this.getScore(item)}/>
                 </div>
             </div>
-                <a className="myButton" onClick={()=>this.inset_db(tartId)}>submit</a>
+                <a className="myButton" onClick={()=>this.inset_db(this.state.tartId)}>submit</a>
+          </div>
           </div>
         </div>
 
@@ -89,11 +79,6 @@ class Moviedetail extends Component {
     this.gotoPage();
   }
 
-  getScore(score){
-    console.log(score)
-    return score
-  }
-
   gotoPage(){
     var tartId = window.location.href.split("/").pop()
     this.setState({loading:true})
@@ -109,7 +94,7 @@ class Moviedetail extends Component {
     var first = firestore.collection("moviesextra").doc(tartId)
     first.get().then(documentSnapshot=>{
       var data = documentSnapshot.data()
-      this.setState({comments: data, loading:false})
+      this.setState({comments: data? data.comments:[], loading:false})
     })
   }
 
@@ -121,6 +106,7 @@ class Moviedetail extends Component {
     var currentUser = firebase.auth().currentUser
     if(!currentUser){
       alert("Please login before making a comment")
+      window.location.assign('/login')
       return 
     }
     var user = {
@@ -130,7 +116,6 @@ class Moviedetail extends Component {
       "providerData": currentUser.providerData,
   }
     var comment={
-      "cid":123456,
       "text": textarea.value,
       "rate":rvalue,
       "like_count":0,
@@ -138,36 +123,66 @@ class Moviedetail extends Component {
       "created_at":createtime,
       "user":user,
     }
- 
     return comment
   }
 
-  inset_db(docid){
-    var movieRef = firestore.collection("moviesextra").doc(docid);
-    var updatedcomments = this.state.comments ? this.state.comments.comments:[]
+  inset_db(docid){   
+    var updatedcomments = this.state.comments ? this.state.comments:[]
     if(!this.format_comments())
         return 
     updatedcomments.push(this.format_comments())
+    this.setState({comments:updatedcomments})
+    this.updatedb(docid, updatedcomments)
+    var textarea = document.getElementById("comment")
+    textarea.value=""
+    alert("Thanks for your comments")
+    }
+
+  updatedb(docid, updatedcomments){
+    var movieRef = firestore.collection("moviesextra").doc(docid);
     movieRef.set({
       comments: updatedcomments
       })
       .then(function() {
         console.log("Document successfully updated!");
-        window.location.reload()
       })
       .catch(function(error) {
         console.error("Error updating document: ", error);
       });
-      alert("Thanks for your comments")
+  }
 
-    }
-  
+  ondelete(docid,index){
+    var movieRef = firestore.collection("moviesextra").doc(docid);
+    var updatedcomments = this.state.comments ? this.state.comments:[]
+
+    updatedcomments.splice(index,1)
+    this.setState({
+      comments: updatedcomments})
+    movieRef.set({
+      comments: updatedcomments
+      })
+      .then(function() {
+        console.log("Document successfully deleted!");
+      })
+      .catch(function(error) {
+        console.error("Error deleting document: ", error);
+      });
+  }
+
+
   commentsrender(comments){
     console.log(comments)
+    var updatedcomments = this.state.comments ? this.state.comments:[]
+    var currentUser = firebase.auth().currentUser
+
     return (
-      comments.map(comment=>{
+      comments.map((comment, index)=>{
+        var deleteclassName = "vanish"
+        if(currentUser){
+          var deleteclassName = currentUser.uid==updatedcomments[index].user.id? "delete": "delete vanish"
+        }
         return (
-        <div className="usercomments">
+        <div className="usercomments" id={index}>
           <div className="commentinfo">
             <img className="profile" src={comment.user.profile_url}
                   width="30" height="30"/>
@@ -177,18 +192,25 @@ class Moviedetail extends Component {
               <span>
               <b>{comment.user.screen_name}</b>:
               commented at {comment.created_at}</span>
+              <a className={deleteclassName}
+                id="deletecomment" 
+                onClick={()=>this.ondelete(this.state.tartId,index)}>delete</a>
             </div>
             <div className="contentdetail">
               <div className="maincontent">{comment.text}</div>
               <div className="rate">{comment.rate} star</div>
             </div>
-          <div className="likecount"><div className="likedetail"><i class='lite-icon'></i>{'   '}{comment.like_count}{'   '}like</div></div>
+          <div className="likecount"><div className="likedetail"><i class='lite-icon' onClick={()=>{
+                      comments[index].like_count=comments[index].like_count+1
+                      this.setState({comments:comments})
+                      this.updatedb(this.state.tartId, updatedcomments)
+                    }
+                      }></i>{'   '}{comment.like_count}{'   '}like</div></div>
         </div>
         </div>
         </div>
         </div>)
       })
-
     )
   }
           

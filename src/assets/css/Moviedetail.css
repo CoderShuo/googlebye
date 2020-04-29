@@ -1,13 +1,12 @@
 
 
-.header{
-    width: auto;
-    float: none;
-    display: block;
-    margin-bottom: 55px;
-    position: relative;
+.detailpage{
+    margin-top: 150px;
 }
 
+.loading{
+    margin-top: 100px;
+}
 .title{
     color: #37a;
     font-size: large;
@@ -69,8 +68,16 @@ textarea {
     display: inline-block;
     margin-left: 10px;
 }
-
-
+.delete{
+    float: right;
+    margin-right: 3px;
+    cursor: pointer;
+    color: tomato;
+    text-decoration: underline;
+}
+.vanish{
+    display: none;
+}
 .wrap-comment{
     vertical-align: top;
     margin-left: 20px;
