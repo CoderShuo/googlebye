@@ -1,7 +1,6 @@
 
 import React, {Component} from 'react';
 import * as firebase from 'firebase'
-import MainPage from './MainPage';
 
 class Navigator extends Component {
     constructor(props){
@@ -17,7 +16,7 @@ class Navigator extends Component {
         <header>
         <center>
           <ul>
-            <li><b>GoogleBye</b></li>
+            <li className="searchpage" onClick={()=>Backtosearch()}><b>GoogleBye</b></li>
             <li><a href="#">Movies</a>
               <ul><li><a href="#">Recently</a></li><li></li></ul>
               <ul><li><a href="#">Popular</a></li><li></li></ul>
@@ -27,7 +26,7 @@ class Navigator extends Component {
             </li>
           </ul>
           <div className="searchbox">
-          <textarea className="searchedit" id="searchbox" cols="30" placeholder="Search movies"></textarea>
+          <input className="searchedit" id="searchbox" placeholder="Search movies"></input>
           <button className="searchbutton" id="searchbtn">Search</button>
           </div>
           <div className="userinfo">
@@ -62,6 +61,9 @@ const Loginout= ()=>{
     console.log(auth)
   }
 
+const Backtosearch=()=>{
+  window.location.assign("/index")
+}
 // export const query = document.getElementById("searchbox").value
 // export const searchbtn = document.getElementById("searchbtn")
   

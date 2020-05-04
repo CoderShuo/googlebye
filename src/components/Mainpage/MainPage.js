@@ -19,6 +19,9 @@ class MainPage extends Component {
   }
 
   render(){
+    // var url = '/page='+this.state.page
+    // // window.location.assign(url)
+    // window.history.pushState(null,null,url)
     console.log("current state = ", this.state.page)
     return (
       MainPageview(this.state.movies, this.state.page, this.state.loading, (query, page)=>this.searchMovie(query,page))
@@ -27,7 +30,7 @@ class MainPage extends Component {
 
  
   componentWillMount(){
-    this.gotoPage(1)
+    this.gotoPage(this.state.page)
   }
 
   searchMovie(query, page){

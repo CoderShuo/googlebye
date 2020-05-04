@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigator from './Navigator'
 import Footer from './Footer'
+import '../../assets/css/style_MainPage.css'
 
 export const MainPageview = (movies, page, loading, searchmovie)=>
 {

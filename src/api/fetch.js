@@ -27,7 +27,6 @@ export const FetchData = (page, query)=>{
 
 export const FetchDetail = (id)=>{
     var url = CONTENT_BASE_URL.replace('%movieid%',id)
-    var detail = []
     return(
     fetch(url)
     .then(response=>response.json())
@@ -39,10 +38,12 @@ export const FetchDetail = (id)=>{
             'score':movie.vote_average,
             'duration':movie.runtime,
             'description':movie.overview,
-            'hotcomment':movie.criticConsensus,
-            'rating':movie.mpaaRating,
+            'genres':movie.genres,
+            'votecount':movie.vote_count,
             'actors':movie.actors,
             'releasedate':movie.release_date,
+            'spoken_lan':movie.spoken_languages,
+            'tagline':movie.tagline,
         }
         return movieinfo
     }))

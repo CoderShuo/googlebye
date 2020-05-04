@@ -65,9 +65,7 @@ body{
     line-height: 1.2;
 }
 
-textarea{
-  height: 30px;
-}
+
 
 .searchbox{
   display: inline-block;
@@ -109,8 +107,9 @@ select{
 }
 
 .searchedit{
-  height: auto;
-  vertical-align: top;
+  width: auto;
+  height: 35px;
+  vertical-align: middle;
   font-size: large;
 }
 .masonry { 

@@ -4,20 +4,67 @@
     margin-top: 150px;
 }
 
+.detailpage span{
+   color: rgb(12, 12, 12);
+}
+
 .loading{
     margin-top: 100px;
 }
 .title{
     color: #37a;
-    font-size: large;
+    font-size: 2.2rem;
     font-weight: bold;
     text-align: left;
+    vertical-align: top;
+    display: inline-block;
 }
+.tagline{
+    font-family: "Source Sans Pro", Arial, sans-serif;
+    color:#919090;
+    font-style: italic;
+}
+.info{
+    display: inline-block;
+    margin-bottom: 15px;
+}
+.ratingnum{
+    color:#494949;
+    font-size: 48px;
+}
+.vote{
+    margin-left: 10px;
+}
+.des{
+    margin-top: 40px;
+    font-style: normal;
+    margin-bottom: 1px;
+    display: block;
+}
+.descotent{
+    font-style: italic;
+}
+.userlogo{
+    text-align: left;
+    font-size: 15px;
+    color:#636060;
+    margin-bottom: 20px;
+}
+.commentofinterest{
+    float: left;
+    text-align: left;
+    border-left: 1px solid #af9f9f;
+    padding-left: 20px;
+    height: 200px;
 
+}
+.commentofinterest span{
+    color: rgb(99, 98, 98);
+}
 .Mainpic{
     float: left;
     margin-right: 15px;
-    max-width: 155px;
+    max-width: 300px;
 }
 
 span{
@@ -37,6 +84,7 @@ span{
 .user-comment{
     padding-left: 10px;
     text-align: left;
+
 }
 
 .editcomment{
@@ -50,10 +98,16 @@ textarea {
     margin-left: 40px;
 }
 
-
+.vote{
+    display: inline-block;
+}
 .display-comments{
     padding: 10px;
     text-align: left;
+    /* border:1px solid rgb(168, 167, 167); */
+    margin-bottom: 10px;
+    margin-top: 100px;
+    max-width: 700px;
 }
 
 .ratetip{
@@ -62,6 +116,41 @@ textarea {
 }
 .starmark{
     margin-top: 20px;
+}
+.allstarrating{
+    background: url('https://img9.doubanio.com/f/shire/b8f4c3672ef81106701071831e22422a745d3b74/pics/rating_icons/ic_rating_s.png');
+    width: 55px;
+    height: 11px;
+    margin: 0 3px 0 0;
+    overflow: hidden;
+    display: inline-block;
+    margin-left: 20px;
+}
+.rate1{
+    background-position-y:-88px;
+}
+.rate2{
+    background-position-y:-66px;
+}
+.rate3{
+    background-position-y:-44px;
+}
+.rate4{
+    background-position-y:-22px;
+}
+.rate5{
+    background-position-y:0px; 
+}
+.genres{
+    margin-top: 20px;
+}
+.genre{
+    border-left:1px solid #929292;
+    color:#ee6a11;
+    font-weight: bold;
+    display: inline;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .starmarking{
@@ -74,6 +163,14 @@ textarea {
     cursor: pointer;
     color: tomato;
     text-decoration: underline;
+}
+/* 
+.searchbox{
+    display: none;
+} */
+.searchpage{
+    cursor: pointer;
+    display: inline;
 }
 .vanish{
     display: none;
@@ -138,6 +235,7 @@ textarea {
 }
 
 .myButton {
+    margin-top: 30px;
 	box-shadow:inset 0px 1px 0px 0px #dcecfb;
 	background:linear-gradient(to bottom, #bddbfa 5%, #80b5ea 100%);
 	background-color:#bddbfa;

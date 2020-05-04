@@ -59,9 +59,10 @@ class Moviedetail extends Component {
                   <StarMarking 
                     getScore={(item)=>this.getScore(item)}/>
                 </div>
-            </div>
                 <a className="myButton" onClick={()=>this.inset_db(this.state.tartId)}>submit</a>
-          </div>
+       
+            </div>
+           </div>
           </div>
         </div>
 
@@ -178,6 +179,7 @@ class Moviedetail extends Component {
     return (
       comments.map((comment, index)=>{
         var deleteclassName = "vanish"
+        var starclassName = "rate"+ comment.rate
         if(currentUser){
           var deleteclassName = currentUser.uid==updatedcomments[index].user.id? "delete": "delete vanish"
         }
@@ -192,13 +194,13 @@ class Moviedetail extends Component {
               <span>
               <b>{comment.user.screen_name}</b>:
               commented at {comment.created_at}</span>
+              <span className={"allstarrating"+" "+starclassName}></span>
               <a className={deleteclassName}
                 id="deletecomment" 
                 onClick={()=>this.ondelete(this.state.tartId,index)}>delete</a>
             </div>
             <div className="contentdetail">
               <div className="maincontent">{comment.text}</div>
-              <div className="rate">{comment.rate} star</div>
             </div>
           <div className="likecount"><div className="likedetail"><i class='lite-icon' onClick={()=>{
                       comments[index].like_count=comments[index].like_count+1
