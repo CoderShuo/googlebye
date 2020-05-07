@@ -53,6 +53,7 @@ export default class StarMarking extends React.Component {
                     onMouseEnter={this.handleOnMouseEnter.bind(this, ele)}
                     onMouseOut={this.handleOnMouseOut.bind(this)}
                     rate = {index+1}
+                    key={index}
                 >
                     {ele > num ? <img src={staricongrey} className="dark"/> : <img src={stariconblue} className="light"/>}
                 </span>

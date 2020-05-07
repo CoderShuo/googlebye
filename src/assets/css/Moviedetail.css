@@ -56,7 +56,7 @@
     border-left: 1px solid #af9f9f;
     padding-left: 20px;
     height: 200px;
-
+    margin-left: 40px;
 }
 .commentofinterest span{
     color: rgb(99, 98, 98);
@@ -178,7 +178,7 @@ textarea {
 .wrap-comment{
     vertical-align: top;
     margin-left: 20px;
-    width: 500px;
+    width: 550px;
     display: inline-block;
     border: 1px solid #d1d5da;
     background-color: #fff;

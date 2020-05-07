@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import Loginview from './components/Login/Loginview'
 import {Redirect, BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import MainPage from './components/Mainpage/MainPage';
-import Moviedetail from './components/Details/Moviedetail'
+import DetailContainer from './components/Details/detailcontainer'
+import About from './Others/about';
 
 class App extends Component {
   render() {
@@ -13,8 +14,8 @@ class App extends Component {
             <Redirect exact from="/" to="Login" />
             <Route path='/login' exact component={Loginview} />
             <Route path='/index' component={MainPage} />
-            <Route path='/detail/:id' exact component={Moviedetail} />
-            
+            <Route path='/detail/:id' exact component={DetailContainer} />
+            <Route path='/about' exact component={About}/>
           </Switch>
         </div>
       </Router>

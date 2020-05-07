@@ -18,17 +18,12 @@ export const logbtnfuction = ()=>{
           // Sign in
           auth.fetchSignInMethodsForEmail(email).then(
             result=>{
-              console.log(result)
               if (result.length==0){
                 var flag = window.confirm("The user doesn't exist, do you want to create a new account?")
                 if(flag){
                   const promise = auth.createUserWithEmailAndPassword(email, pass)
-                  setTimeout(alert("Email sent, Please Check your mailbox to confirm your email"),5000)
+                  setTimeout(alert("Thanks for registering!"),5000)
                   console.log(email)
-                  auth.currentUser.sendEmailVerification().then(function() {
-                      console.log("email sent")
-                    }).catch(function(error) {
-                      console.log(error)})
                   promise.catch(e=>console.log(e.message))
                 }
 
@@ -49,22 +44,30 @@ export const logbtnfuction = ()=>{
           var auth = firebase.auth();
           var emailAddress = txtEmail.value;
           auth.sendPasswordResetEmail(emailAddress).then(function() {
-            console.log("Email sent to: ",emailAddress, ",Please Check your mailbox to reset your password")
+            alert("Email sent to: ",emailAddress, ",Please Check your mailbox to reset your password")
             // Email sent.
           }).catch(function(error) {
             // An error happened.
-            console.log(error)
+            alert('There is no user record corresponding to this identifier. Please check the email again!')
           });
         }
           )
     
         auth.onAuthStateChanged(firebaseUser=>{
           if(firebaseUser){
-            console.log(firebaseUser);
+            if(!firebaseUser.emailVerified){
+              alert('Your account has not been verified, please check your mailbox to verify it!')
+              firebaseUser.sendEmailVerification().then(function() {
+                console.log("email sent")
+                firebase.auth().signOut()
+              }).catch(function(error) {
+                console.log(error)})
+            }
+            else{
             window.alert("Login successed!")
             window.location.assign("/index")
+            }
           }else{
-            console.log("not logged in")
           }
         })
         btnfb.addEventListener("click",e=>{

@@ -1,7 +1,8 @@
 import {API_BASE_URL,CONTENT_BASE_URL, SEARCH_BASE_URL, IMG_ENDPOINT} from './setting'
 
-export const FetchData = (page, query)=>{
-    var url = query ? (SEARCH_BASE_URL+'&page='+page).replace('%query%',query):(API_BASE_URL+'&page='+page).replace('%desc%','popularity.desc')
+export const FetchData = (page, query,sort)=>{
+    console.log('Feeeetch',sort)
+    var url = query ? (SEARCH_BASE_URL+'&page='+page).replace('%query%',query):(API_BASE_URL+'&page='+page).replace('%desc%',sort)
     var moviearr = []
     return(
     fetch(url,{

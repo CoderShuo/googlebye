@@ -12,22 +12,25 @@ class Navigator extends Component {
       }
     }
     render(){
+      var tartId = window.location.href.split("/").pop()
+      var cn = (tartId!=='index')? 'vanish':''
+      var searchcn = "searchbox" +' '+cn
         return(
         <header>
         <center>
           <ul>
             <li className="searchpage" onClick={()=>Backtosearch()}><b>GoogleBye</b></li>
-            <li><a href="#">Movies</a>
-              <ul><li><a href="#">Recently</a></li><li></li></ul>
-              <ul><li><a href="#">Popular</a></li><li></li></ul>
+            <li><a href="" className={cn}>Sort</a>
+              <ul><li><a onClick={()=>this.props.changesort('primary_release_date.asc')}>Old</a></li><li></li></ul>
+              <ul><li><a onClick={()=>this.props.changesort('popularity.desc')}>Popular</a></li><li></li></ul>
+              <ul><li><a onClick={()=>this.props.changesort('vote_count.desc')}>Vote Count</a></li><li></li></ul>
+            
             </li>
-            <li><a href="#">My Page</a>
-              <ul><li><a href="#" onClick={()=>Loginout()}>Logout</a></li><li></li></ul>
-            </li>
+              <ul><li><a href="" onClick={()=>Loginout()}>Logout</a></li><li></li></ul>
           </ul>
-          <div className="searchbox">
+          <div className= {searchcn}>
           <input className="searchedit" id="searchbox" placeholder="Search movies"></input>
-          <button className="searchbutton" id="searchbtn">Search</button>
+          <button className= 'searchbutton' id="searchbtn">Search</button>
           </div>
           <div className="userinfo">
           <img className = "userimg" src={this.state.displayimg} width="40px"/>
@@ -64,7 +67,7 @@ const Loginout= ()=>{
 const Backtosearch=()=>{
   window.location.assign("/index")
 }
-// export const query = document.getElementById("searchbox").value
-// export const searchbtn = document.getElementById("searchbtn")
+
+
   
 export default Navigator

@@ -261,7 +261,6 @@ button{
 }
 
 .btn-action{
-  display: flex;
   text-align: center;
   background-color: #157DC3;
 }

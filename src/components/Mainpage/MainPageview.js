@@ -3,7 +3,7 @@ import Navigator from './Navigator'
 import Footer from './Footer'
 import '../../assets/css/style_MainPage.css'
 
-export const MainPageview = (movies, page, loading, searchmovie)=>
+export const MainPageview = (movies, page, loading, searchmovie, norpage,changesort)=>
 {
 
   if (loading) {
@@ -17,15 +17,29 @@ export const MainPageview = (movies, page, loading, searchmovie)=>
     </div>
     )
   }
-  if(movies){
+  if(movies.length>0){
     return(
-      <div class="container">
-        <Navigator funsearch={(query,page)=>searchmovie(query,page)}/>
+      <div className="container">
+        <Navigator funsearch={(query,page)=>searchmovie(query,page)} norpage={(page, sort)=>norpage(page,sort)} changesort={(sort)=>changesort(sort)}/>
         <div className="masonry" id="contents" onClick={Itemclick}>
-          {movies.map(x=>{
-            return getMovieDiv(x)
+          {movies.map((x,indx)=>{
+            return getMovieDiv(x,indx)
             }
           )}
+        </div>
+
+        <div id="page" className="pagepart">
+          {Pagerender(page)}
+        </div>
+        <Footer/>
+      </div>)
+  }
+  else{
+    return(
+      <div className="container">
+        <Navigator funsearch={(query,page)=>searchmovie(query,page)} norpage={(page, sort)=>norpage(page,sort)} changesort={(sort)=>changesort(sort)}/>
+        <div className="masonry" id="contents" onClick={Itemclick}>
+          <div className='notfound'>404 No results found.</div>
         </div>
 
         <div id="page" className="pagepart">
@@ -37,10 +51,10 @@ export const MainPageview = (movies, page, loading, searchmovie)=>
 }
 
 
-const getMovieDiv=(movie)=>{
+const getMovieDiv=(movie,indx)=>{
   if(movie){
     return(
-      <div className='item' id={movie.id}>
+      <div className='item' id={movie.id} key={indx}>
         <img src={movie.img} 
              alt={movie.title} 
              className='poster'
@@ -62,18 +76,18 @@ const Pagerender=(page)=>{
     arr.push(i);
   }
   var pagehtml = [
-    <button className="pagebutton" id="pre" disabled={page==1}>pre</button>
+    <button className="pagebutton" id="pre" disabled={page==1} key={0}>pre</button>
   ]
-  arr.map(x=>{
+  arr.map((x,indx)=>{
     if(x===page){
-      pagehtml = [...pagehtml, <button class="pagebutton" id={x} style={{color:"#111"}}>{x}</button>]
+      pagehtml = [...pagehtml, <button className="pagebutton" id={x} key={indx+1} style={{color:"#111"}}>{x}</button>]
     }
     else if(x>0){
-      pagehtml = [...pagehtml, <button class="pagebutton" id={x}>{x}</button>]
+      pagehtml = [...pagehtml, <button className="pagebutton" id={x} key={indx+1}>{x}</button>]
     }
   })
-  pagehtml = [...pagehtml, <button class="pagebutton" id="next">next</button>]
-  pagehtml = [...pagehtml, <span class="pagebutton goto" ><input className="inputno" maxLength="3" width="3"/><div id="switchpage" className="jump">Go to page</div></span>]
+  pagehtml = [...pagehtml, <button className="pagebutton" id="next" key={11}>next</button>]
+  pagehtml = [...pagehtml, <span className="pagebutton goto" key={12}><input className="inputno" maxLength="3" width="3"/><div id="switchpage" className="jump">Go to page</div></span>]
   return pagehtml
 }
 

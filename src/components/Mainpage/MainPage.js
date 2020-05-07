@@ -1,6 +1,4 @@
-import React, {Component,findDOMNode} from 'react';
-import Navigator from './Navigator'
-import * as firebase from 'firebase'
+import React, {Component} from 'react';
 import '../../assets/css/style_MainPage.css'
 import {firestore} from '../../config/firebase'
 import {MainPageview} from './MainPageview'
@@ -15,22 +13,21 @@ class MainPage extends Component {
       limit: 32,
       movies: [],
       loading: false,
+      recent:false,
+      sort:'popularity.desc',
     }
   }
 
   render(){
-    // var url = '/page='+this.state.page
-    // // window.location.assign(url)
-    // window.history.pushState(null,null,url)
-    console.log("current state = ", this.state.page)
     return (
-      MainPageview(this.state.movies, this.state.page, this.state.loading, (query, page)=>this.searchMovie(query,page))
+      MainPageview(this.state.movies, this.state.page, this.state.loading, (query, page)=>this.searchMovie(query,page)
+      ,(page)=>this.gotoPage(page),(sort)=>this.changesort(sort))
     )
   }
 
  
   componentWillMount(){
-    this.gotoPage(this.state.page)
+    this.gotoPage(this.state.page,'',this.state.sort)
   }
 
   searchMovie(query, page){
@@ -50,8 +47,26 @@ class MainPage extends Component {
     .catch(err=>
       console.log(err))
   }
-  gotoPage(page){
 
+  changesort(sort){
+    this.setState({
+      loading:true,
+      sort:sort
+    })
+    FetchData(1,'',sort)
+    .then(data=>{
+      this.setState({
+        movies:data,
+        page:1,
+        loading: false,
+      })
+    })
+    .catch(err=>
+      console.log(err))
+
+  }
+
+  gotoPage(page){
   // The way extract data from firebase
   //   var tartId = 123456 + this.state.limit * (page-1)
   //   var first = firestore.collection("movies")
@@ -74,9 +89,9 @@ class MainPage extends Component {
 
   // Fetch data from api
       this.setState({
-        loading:true
+        loading:true,
       })
-      FetchData(page)
+      FetchData(page,'',this.state.sort)
       .then(data=>{
         this.setState({
           movies:data,

@@ -122,9 +122,15 @@ select{
     text-align: center;
     vertical-align: top;
     max-width: 855px;
+    min-height: 700px;
 }
 
-
+.notfound{
+  padding-top: 300px;
+  font-size: 30px;
+  color: rgb(17, 143, 6);
+  font-weight: bold;
+}
 
 
 .item { 
@@ -144,6 +150,14 @@ footer{
     height:100px;
     background:#00b2ff;
 }
+.aboutcontent{
+  text-align: left;
+}
+.aboutcontent p{
+  color:#111;
+  font-size: 16px;
+}
+
 .poster{
   width:130px; 
   height:190px;
@@ -210,6 +224,9 @@ input{
   cursor: pointer;
   font-size: 20px;
   color: #111;
-  display: block;
+  display: inline-block;
 }
 
+.about a{
+  color:#111;
+}

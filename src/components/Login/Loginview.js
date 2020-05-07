@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../../assets/css/style_login.css'
 import {logbtnfuction} from './Logincontainer'
-
+import Popup from "reactjs-popup";
 class Loginview extends Component {
  
   render(){
@@ -17,7 +17,7 @@ class Loginview extends Component {
               <input id = "txtPassword" className="input-login" placeholder = "Password" type="password"></input>
             </div>
             <div className="text-right">
-              <a id="reset" href="javascript:">Forgot your password?</a>
+              <a id="reset" href="">Forgot your password?</a>
             </div> 
             </form>
             <button id="btnLogin" className="login-button btn-action">Log in/Sign Up</button>
@@ -39,7 +39,11 @@ class Loginview extends Component {
               </button>
             </div>
             <div className="Signtip">
-              Sign up means you agree with <u class="policy">our aggrement</u>
+    Sign up means you agree with <Popup trigger ={<u className="policy">our aggrement</u>} position="right center">
+          <div>
+            Free free to use and have fun with our application. 
+          </div>
+            </Popup>
             </div>
         </div>
     </div>)
