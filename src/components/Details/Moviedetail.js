@@ -22,7 +22,7 @@ class Moviedetail extends Component {
       <div className="loading">
       <Loader
         type="Puff"
-        color="#00BFFF"
+        color="#cc4e87"
         height={100}
         width={100}
         timeout={3000} //3 secs

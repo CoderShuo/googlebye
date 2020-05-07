@@ -7,14 +7,17 @@ import Footer from './Footer';
 
 class MainPage extends Component {
   constructor(props){
+    var sort = localStorage.getItem('sort')
+    sort = sort? sort:'popularity.desc'
+    var query = localStorage.getItem('query')
+    query = query? query:null
     super(props);
     this.state={
       page: 1,
-      limit: 32,
       movies: [],
       loading: false,
-      recent:false,
-      sort:'popularity.desc',
+      sort:sort,
+      query: query
     }
   }
 
@@ -27,7 +30,22 @@ class MainPage extends Component {
 
  
   componentWillMount(){
-    this.gotoPage(this.state.page,'',this.state.sort)
+    console.log('mounttttttttt')
+    var page = localStorage.getItem('page')
+    var sort = localStorage.getItem('sort')
+    var query = localStorage.getItem('query')
+    page = page?parseInt(page):this.state.page
+    sort = sort? sort:this.state.sort
+    query = query? query: this.state.query
+
+    if(query&&query!='null'){
+      console.log('search',query,page)
+      this.searchMovie(query, page)
+    }
+    else{
+      console.log('sort',sort,page)
+      this.gotoPage(page)
+    }
   }
 
   searchMovie(query, page){
@@ -46,6 +64,10 @@ class MainPage extends Component {
     })
     .catch(err=>
       console.log(err))
+
+      localStorage.setItem('page',page)
+      localStorage.setItem('query',query)
+      
   }
 
   changesort(sort){
@@ -59,11 +81,14 @@ class MainPage extends Component {
         movies:data,
         page:1,
         loading: false,
+        query:null
       })
     })
     .catch(err=>
       console.log(err))
-
+    localStorage.setItem('sort',sort)
+    localStorage.setItem('page',1)
+    localStorage.setItem('query',null)
   }
 
   gotoPage(page){
@@ -91,7 +116,7 @@ class MainPage extends Component {
       this.setState({
         loading:true,
       })
-      FetchData(page,'',this.state.sort)
+      FetchData(page,null,this.state.sort)
       .then(data=>{
         this.setState({
           movies:data,
@@ -101,6 +126,9 @@ class MainPage extends Component {
       })
       .catch(err=>
         console.log(err))
+        localStorage.setItem('page', page);   
+        localStorage.setItem('sort',this.state.sort)
+        localStorage.setItem('query',null)     
   }
 
   componentDidMount(){
@@ -115,9 +143,10 @@ class MainPage extends Component {
         return 
       if(event.target.closest("span")){
         var page = event.target.previousElementSibling.value
+        var query = this.state.query
         if (!page)
           return 
-        if(this.state.query){
+        if(query&&query!='null'){
           this.searchMovie(this.state.query, parseInt(page))
         }
         else{
@@ -143,7 +172,7 @@ class MainPage extends Component {
       }
       
       setTimeout(() => {
-        if(this.state.query){
+        if(this.state.query&&this.state.query!='null'){
           this.searchMovie(this.state.query, jumpto)
         }
         else{
