@@ -2,10 +2,23 @@ import React, {Component} from 'react';
 import '../../assets/css/style_login.css'
 import {logbtnfuction} from './Logincontainer'
 import Popup from "reactjs-popup";
+import {ModalTip, ModalConfirm} from '../Modal'
+
 class Loginview extends Component {
- 
+  constructor(props){
+    super(props);
+    this.state={
+    showModal:false, 
+    fun:null,
+    title:null,
+    body:null,
+    showConModal:false,
+    flag:false,
+    }
+  }
   render(){
-    return(
+  return(
+    <>
     <div className="Signcontainer">
         <div className="wrap-login">
         <form className="form-login">
@@ -17,7 +30,7 @@ class Loginview extends Component {
               <input id = "txtPassword" className="input-login" placeholder = "Password" type="password"></input>
             </div>
             <div className="text-right">
-              <a id="reset" href="">Forgot your password?</a>
+              <u id="reset">Forgot your password?</u>
             </div> 
             </form>
             <button id="btnLogin" className="login-button btn-action">Log in/Sign Up</button>
@@ -46,11 +59,29 @@ class Loginview extends Component {
             </Popup>
             </div>
         </div>
-    </div>)
+    </div>
+     {ModalTip(this.state.showModal,this.state.fun,this.state.title,this.state.body)}
+     {ModalConfirm(this.state.showConModal,this.state.fun,this.state.title,this.state.body,this.state.flag,false)}
+     </>
+    )
   }
 
   componentDidMount(){
-    logbtnfuction();
+    logbtnfuction((showModal,fun,title,body,showConModal)=>this.modalstateChange(showModal,fun,title,body,showConModal),
+                  );
+
+  }
+
+  modalstateChange(showModal,fun,title,body,showConModal){
+    fun = fun==null? ()=>this.setState({showModal:false,showConModal:false}):fun
+    this.setState({
+      showModal:showModal,
+      fun:fun,
+      title:title,
+      body:body,
+      showConModal:showConModal,
+    })
+
   }
 
 }

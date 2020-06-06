@@ -7,9 +7,9 @@ import Footer from './Footer';
 
 class MainPage extends Component {
   constructor(props){
-    var sort = localStorage.getItem('sort')
+    var sort = sessionStorage.getItem('sort')
     sort = sort? sort:'popularity.desc'
-    var query = localStorage.getItem('query')
+    var query = sessionStorage.getItem('query')
     query = query? query:null
     super(props);
     this.state={
@@ -24,26 +24,23 @@ class MainPage extends Component {
   render(){
     return (
       MainPageview(this.state.movies, this.state.page, this.state.loading, (query, page)=>this.searchMovie(query,page)
-      ,(page)=>this.gotoPage(page),(sort)=>this.changesort(sort))
+      ,(page)=>this.gotoPage(page),(sort)=>this.changesort(sort),this.state.maxpage)
     )
   }
 
  
   componentWillMount(){
-    console.log('mounttttttttt')
-    var page = localStorage.getItem('page')
-    var sort = localStorage.getItem('sort')
-    var query = localStorage.getItem('query')
+    var page = sessionStorage.getItem('page')
+    var sort = sessionStorage.getItem('sort')
+    var query = sessionStorage.getItem('query')
     page = page?parseInt(page):this.state.page
     sort = sort? sort:this.state.sort
     query = query? query: this.state.query
 
     if(query&&query!='null'){
-      console.log('search',query,page)
       this.searchMovie(query, page)
     }
     else{
-      console.log('sort',sort,page)
       this.gotoPage(page)
     }
   }
@@ -57,17 +54,16 @@ class MainPage extends Component {
     FetchData(page,query)
     .then(data=>{
       this.setState({
-        movies:data,
+        movies:data[0],
         page:page,
         loading: false,
+        maxpage:data[1],
       })
     })
     .catch(err=>
       console.log(err))
-
-      localStorage.setItem('page',page)
-      localStorage.setItem('query',query)
-      
+      sessionStorage.setItem('page',page)
+      sessionStorage.setItem('query',query)
   }
 
   changesort(sort){
@@ -78,17 +74,18 @@ class MainPage extends Component {
     FetchData(1,'',sort)
     .then(data=>{
       this.setState({
-        movies:data,
+        movies:data[0],
         page:1,
         loading: false,
-        query:null
+        query:null,
+        maxpage:data[1],
       })
     })
     .catch(err=>
       console.log(err))
-    localStorage.setItem('sort',sort)
-    localStorage.setItem('page',1)
-    localStorage.setItem('query',null)
+      sessionStorage.setItem('sort',sort)
+      sessionStorage.setItem('page',1)
+      sessionStorage.setItem('query',null)
   }
 
   gotoPage(page){
@@ -118,17 +115,19 @@ class MainPage extends Component {
       })
       FetchData(page,null,this.state.sort)
       .then(data=>{
+        console.log(data)
         this.setState({
-          movies:data,
+          movies:data[0],
           page:page,
           loading: false,
+          maxpage:data[1],
         })
       })
       .catch(err=>
         console.log(err))
-        localStorage.setItem('page', page);   
-        localStorage.setItem('sort',this.state.sort)
-        localStorage.setItem('query',null)     
+        sessionStorage.setItem('page', page);   
+        sessionStorage.setItem('sort',this.state.sort)
+        sessionStorage.setItem('query',null)     
   }
 
   componentDidMount(){
@@ -147,10 +146,14 @@ class MainPage extends Component {
         if (!page)
           return 
         if(query&&query!='null'){
-          this.searchMovie(this.state.query, parseInt(page))
+          var inputpage = parseInt(page)
+          inputpage = inputpage>this.state.maxpage? this.state.maxpage:inputpage
+          this.searchMovie(this.state.query, inputpage)
         }
         else{
-        this.gotoPage(parseInt(page))
+        var inputpage = parseInt(page)
+        inputpage = inputpage>this.state.maxpage? this.state.maxpage:inputpage
+        this.gotoPage(inputpage)
         }
         event.target.previousElementSibling.value=""
       }
@@ -179,10 +182,18 @@ class MainPage extends Component {
         this.gotoPage(parseInt(jumpto))
         }
       }, 500)
-    }
-  )
-  
 
+    })
+
+    var pageBox = document.getElementById("pagebox")
+    pageBox.addEventListener("keypress", function (e) {
+      var allowedChars = '0123456789';
+      function contains(stringValue, charValue) {
+          return stringValue.indexOf(charValue) > -1;
+      }
+      var invalidKey = e.key.length === 1 && !contains(allowedChars, e.key)
+              || e.key === '.' && contains(e.target.value, '.');
+      invalidKey && e.preventDefault();})
 
     //searchbtn.addEventListener('click',()=>{console.log(query)})
   

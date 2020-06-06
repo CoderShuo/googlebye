@@ -5,11 +5,18 @@
 /.pnp
 .pnp.js
 
+# report things
+Shuo-self-reflection.pdf
+Shuo-self-reflection.pdf.docx
+
 # testing
 /coverage
 
 # production
 /build
+
+# key
+/src/config/dev.js
 
 # misc
 .DS_Store

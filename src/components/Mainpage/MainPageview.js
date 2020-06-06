@@ -3,23 +3,26 @@ import Navigator from './Navigator'
 import Footer from './Footer'
 import '../../assets/css/style_MainPage.css'
 
-export const MainPageview = (movies, page, loading, searchmovie, norpage,changesort)=>
+export const MainPageview = (movies, page, loading, searchmovie, norpage,changesort,maxpage)=>
 {
 
   if (loading) {
     return(
-      <div className="contrainer">
+      <div className="loadcontainer">
       <Navigator/>
-      <img src="loading-balls.svg" alt="Loading icon" />
+      <div className="loadmovie"></div>
+      <div className="bottompart">
       <div id="page" className="pagepart">
-      {Pagerender(page)}
+      {Pagerender(page,maxpage)}
+      <Footer/>
+      </div>
       </div>
     </div>
     )
   }
   if(movies.length>0){
     return(
-      <div className="container">
+      <div className="mainpagecontainer">
         <Navigator funsearch={(query,page)=>searchmovie(query,page)} norpage={(page, sort)=>norpage(page,sort)} changesort={(sort)=>changesort(sort)}/>
         <div className="masonry" id="contents" onClick={Itemclick}>
           {movies.map((x,indx)=>{
@@ -27,25 +30,28 @@ export const MainPageview = (movies, page, loading, searchmovie, norpage,changes
             }
           )}
         </div>
-
+        <div className="bottomp">
         <div id="page" className="pagepart">
-          {Pagerender(page)}
-        </div>
+          {Pagerender(page,maxpage)}
         <Footer/>
+        </div>
+        </div>
       </div>)
   }
   else{
     return(
-      <div className="container">
+      <div>
         <Navigator funsearch={(query,page)=>searchmovie(query,page)} norpage={(page, sort)=>norpage(page,sort)} changesort={(sort)=>changesort(sort)}/>
         <div className="masonry" id="contents" onClick={Itemclick}>
           <div className='notfound'>404 No results found.</div>
         </div>
-
+        <div className="bottomp">
         <div id="page" className="pagepart">
-          {Pagerender(page)}
-        </div>
+          {Pagerender(page,maxpage)}
+       
         <Footer/>
+        </div>
+        </div>
       </div>)
   }
 }
@@ -69,7 +75,8 @@ const getMovieDiv=(movie,indx)=>{
   }
 }
 
-const Pagerender=(page)=>{
+const Pagerender=(page,maxpage)=>{
+  var last = false
   var from = parseInt(page/10)*10
   var arr = [];
   for(var i = from; i < from+10; i++){
@@ -79,6 +86,13 @@ const Pagerender=(page)=>{
     <button className="pagebutton" id="pre" disabled={page==1} key={0}>pre</button>
   ]
   arr.map((x,indx)=>{
+
+    if(x>maxpage){
+      last=true
+      return
+    }
+      
+
     if(x===page){
       pagehtml = [...pagehtml, <button className="pagebutton" id={x} key={indx+1} style={{color:"#111"}}>{x}</button>]
     }
@@ -86,8 +100,8 @@ const Pagerender=(page)=>{
       pagehtml = [...pagehtml, <button className="pagebutton" id={x} key={indx+1}>{x}</button>]
     }
   })
-  pagehtml = [...pagehtml, <button className="pagebutton" id="next" key={11}>next</button>]
-  pagehtml = [...pagehtml, <span className="pagebutton goto" key={12}><input className="inputno" maxLength="3" width="3"/><div id="switchpage" className="jump">Go to page</div></span>]
+  pagehtml = page==maxpage ? pagehtml:[...pagehtml, <button className="pagebutton" id="next" key={11}>next</button>]
+  pagehtml = [...pagehtml, <span className="pagebutton goto" key={12}><input className="inputno" id="pagebox" maxLength="3" width="3"/><div id="switchpage" className="jump">Go to page</div></span>]
   return pagehtml
 }
 

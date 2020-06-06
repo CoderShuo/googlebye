@@ -5,6 +5,8 @@ import Moviedetail from './Moviedetail'
 import {firestore} from '../../config/firebase'
 import {FetchDetail} from "../../api/fetch";
 import * as firebase from 'firebase'
+import {ModalTip} from '../Modal'
+
 class DetailContainer extends Component {
 
     constructor(props){
@@ -14,31 +16,38 @@ class DetailContainer extends Component {
           loading:true,
           tartId : window.location.href.split("/").pop(),
           comments: [],
-          clicktimes:0,
+          showModal:false,
         }
    }
 
     render(){
         return(
+          <>
             <Moviedetail movie={this.state.movie} hotcomment={this.state.hotcomment}
             comments={this.state.comments} loading={this.state.loading}
             ondelete={(index)=>this.ondelete(this.state.tartId,index)}
             inset_db={()=>this.inset_db(this.state.tartId)}
             likefun={(index,comments)=>this.likefun(index,comments)}
             />
+            {ModalTip(this.state.showModal,this.state.fun,this.state.title,this.state.body)}
+          </>
         )
     }
 
     likefun(index,comments){
-        if(this.state.clicktimes>5){
-            alert('Too frequent request!')
-            return }
-        if(!firebase.auth().currentUser){
-            alert("Please login before making a like")
-            window.location.assign('/login')
+        var currentUser = firebase.auth().currentUser
+        if(!currentUser){
+            this.setState({showModal:true, fun:()=>window.location.assign('/login'),title:'',body:"Please login before making a like"})
+            return
         }
-        comments[index].like_count=comments[index].like_count+1
-        this.setState({comments:comments,clicktimes:this.state.clicktimes+1})
+        var like_index = comments[index].liked_by.indexOf(currentUser.uid)
+        if(like_index>-1){
+          comments[index].liked_by.splice(like_index,1)
+        }
+        else
+          comments[index].liked_by.push(currentUser.uid)
+
+        this.setState({comments:comments})
         this.updatedb(this.state.tartId, comments)
     }
 
@@ -85,12 +94,11 @@ class DetailContainer extends Component {
         var rvalue = document.getElementsByClassName('light').length
         var currentUser = firebase.auth().currentUser
         if(!currentUser){
-        alert("Please login before making a comment")
-        window.location.assign('/login')
-        return 
+          this.setState({showModal:true, fun:()=>window.location.assign('/login'),title:'',body:"Please login before making a comment"})
+          return 
         }
         if(rvalue==0 || !textarea.value){
-        alert('Plz rate and comment before submitting.')
+          this.setState({showModal:true, fun:()=>this.setState({showModal:false}),title:'',body:'Plz rate and comment before submitting.'})
         return 
         }
         var user = {
@@ -106,6 +114,7 @@ class DetailContainer extends Component {
         "liked":false,
         "created_at":createtime,
         "user":user,
+        "liked_by":[],
         }
         return comment
     }
@@ -119,7 +128,7 @@ class DetailContainer extends Component {
         this.updatedb(docid, updatedcomments)
         var textarea = document.getElementById("comment")
         textarea.value=""
-        alert("Thanks for your comments")
+        this.setState({showModal:true,fun:()=>this.setState({showModal:false}), title:'',body:'Submit your comment'})
         }
 
     updatedb(docid, updatedcomments){

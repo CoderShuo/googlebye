@@ -1,32 +1,74 @@
 
 import React, {Component} from 'react';
 import * as firebase from 'firebase'
+import {ModalTip, ModalConfirm} from '../Modal'
 
+const defaultimg = "https://www.palmkvistmaleri.se/wp-content/uploads/2018/02/default.jpg"
 class Navigator extends Component {
     constructor(props){
       super(props)
       this.state=
       {
-        displayName: "",
-        displayimg:null,
+        displayName: sessionStorage.getItem("displayName"),
+        displayimg:sessionStorage.getItem("displayimg"),
+        showModal:false,
+        fun: ()=>{
+          this.setState({showModal:false})
+          Loginout()
+        }
       }
     }
     render(){
       var tartId = window.location.href.split("/").pop()
       var cn = (tartId!=='index')? 'vanish':''
       var searchcn = "searchbox" +' '+cn
+      if(this.state.displayName==="unlogin")
+      {
         return(
         <header>
         <center>
           <ul>
             <li className="searchpage" onClick={()=>Backtosearch()}><b>GoogleBye</b></li>
-            <li><a href="" className={cn}>Sort</a>
-              <ul><li><a onClick={()=>this.props.changesort('primary_release_date.asc')}>Old</a></li><li></li></ul>
-              <ul><li><a onClick={()=>this.props.changesort('popularity.desc')}>Popular</a></li><li></li></ul>
-              <ul><li><a onClick={()=>this.props.changesort('vote_count.desc')}>Vote Count</a></li><li></li></ul>
-            
+            <li className={cn}>
+            <a style={{"color":"#fff", "font-weight":"bold"}}>Sort</a>
+            <div className="options">
+              <ul><li onClick={()=>this.props.changesort('primary_release_date.asc')}>Old</li>
+              <li onClick={()=>this.props.changesort('popularity.desc')}>Popular</li>
+              <li onClick={()=>this.props.changesort('vote_count.desc')}>Vote Count</li>
+              </ul>
+              </div>
             </li>
-              <ul><li><a href="" onClick={()=>Loginout()}>Logout</a></li><li></li></ul>
+          </ul>
+          <div className= {searchcn}>
+          <input className="searchedit" id="searchbox" placeholder="Search movies"></input>
+          <button className= 'searchbutton' id="searchbtn">Search</button>
+          </div>
+          <div className="userinfo">
+          <a href="/login" style={{"color":"#fff","font-weight":"bold"}}>Login</a>
+          </div>
+        </center>
+      </header>
+        )
+      }
+      else{
+      return(
+        <>
+        <header>
+        <center>
+          <ul>
+            <li className="searchpage" onClick={()=>Backtosearch()}><b>GoogleBye</b></li>
+            <li className={cn}>
+            <a style={{"color":"#fff", "font-weight":"bold"}}>Sort</a>
+            <div className="options">
+              <ul><li onClick={()=>this.props.changesort('primary_release_date.asc')}>Old</li>
+              <li onClick={()=>this.props.changesort('popularity.desc')}>Popular</li>
+              <li onClick={()=>this.props.changesort('vote_count.desc')}>Vote Count</li>
+              </ul>
+              </div>
+            </li>
+              <li onClick={()=>{
+                this.setState({showModal:true})}}>
+                <a style={{"color":"#fff", "font-weight":"bold"}}>Logout</a></li>
           </ul>
           <div className= {searchcn}>
           <input className="searchedit" id="searchbox" placeholder="Search movies"></input>
@@ -37,7 +79,11 @@ class Navigator extends Component {
           <span className = "username">{this.state.displayName}</span>
           </div>
         </center>
-      </header>)
+      </header>
+      {ModalTip(this.state.showModal,this.state.fun,"Log Out","You've signed off")}
+      </>
+      )
+      }
     }
 
     componentDidMount(){
@@ -46,9 +92,31 @@ class Navigator extends Component {
         var query = document.getElementById("searchbox").value
         this.props.funsearch(query,1)
       })
+
+      var searchbox = document.getElementById("searchbox")
+      searchbox.addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+          // Cancel the default action, if needed
+          event.preventDefault();
+          // Trigger the button element with a click
+          searchbtn.click();
+        }
+      });
+
       firebase.auth().onAuthStateChanged(firebaseUser=>{
+        console.log(firebaseUser)
         if(firebaseUser){
+          if(!firebaseUser.displayName){
+            this.setState({displayName:"Anonymous", displayimg:defaultimg})
+            sessionStorage.setItem('displayName',"Anonymous")
+            sessionStorage.setItem('displayimg',defaultimg)
+          }
+          else {
           this.setState({displayName:firebaseUser.displayName, displayimg:firebaseUser.photoURL})
+          sessionStorage.setItem('displayName',firebaseUser.displayName)
+          sessionStorage.setItem('displayimg',firebaseUser.photoURL)
+          }
         }
       })
     }
@@ -56,12 +124,13 @@ class Navigator extends Component {
 
 const Loginout= ()=>{
     var auth = firebase.auth().signOut().then(function() {
-      alert("You've signed out")
+      sessionStorage.setItem('displayName',"unlogin")
+      sessionStorage.setItem('displayimg',"")
       window.location.assign("/login")
     }, function(error) {
       console.log("Failed to sign out:", error)
     });
-    console.log(auth)
+    
   }
 
 const Backtosearch=()=>{
