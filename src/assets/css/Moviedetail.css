@@ -10,6 +10,7 @@
 
 .loading{
     margin-top: 100px;
+    text-align: center;
 }
 .title{
     color: #37a;
@@ -216,6 +217,10 @@ textarea {
 .likecount{
     background-color: #fff;
 
+}
+
+.liked_cliked{
+    background-color: #f1f8ff;
 }
 
 .likedetail{

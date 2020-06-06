@@ -2,7 +2,9 @@
 import {auth} from '../../config/firebase';
 import * as firebase from 'firebase'
 
-export const logbtnfuction = ()=>{
+
+export const logbtnfuction = (modalStatechange,confun)=>{
+        console.log(modalStatechange)
         // Get elements
         const txtEmail = document.getElementById('txtEmail')
         const txtPassword = document.getElementById('txtPassword')
@@ -18,13 +20,21 @@ export const logbtnfuction = ()=>{
           // Sign in
           auth.fetchSignInMethodsForEmail(email).then(
             result=>{
-              if (result.length==0){
-                var flag = window.confirm("The user doesn't exist, do you want to create a new account?")
+            if (result.length==0){
+                var body = "The user doesn't exist, do you want to create a new account?"
+                var flag = window.confirm(body)
                 if(flag){
                   const promise = auth.createUserWithEmailAndPassword(email, pass)
-                  setTimeout(alert("Thanks for registering!"),5000)
-                  console.log(email)
-                  promise.catch(e=>console.log(e.message))
+                  setTimeout(
+                    ()=>{
+                    var showModal=true
+                    var body = "Thanks for registering!"
+                    modalStatechange(showModal,null,'',body)
+                  },5000)
+                  promise.catch(e=>{
+                    console.log(e.message)
+                    modalStatechange(true,null,'',e.message)
+                  })
                 }
 
               }
@@ -33,22 +43,42 @@ export const logbtnfuction = ()=>{
                 promise.catch(
                   e=>{
                   console.log(e.message)
-                  window.alert(e)
+                  modalStatechange(true,null,null,e.message)
                 })
               }
     
             }
           )
         })
+        txtPassword.addEventListener("keyup", function(event) {
+          // Number 13 is the "Enter" key on the keyboard
+          if (event.keyCode === 13) {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+            btnLogin.click();
+          }
+        });
+
         hreset.addEventListener("click", e=>{
           var auth = firebase.auth();
           var emailAddress = txtEmail.value;
+          if(!emailAddress){
+            var showModal=true
+            var body = "Please input your email at first!"
+            modalStatechange(showModal,null,'',body)
+            return
+          }
+          
           auth.sendPasswordResetEmail(emailAddress).then(function() {
-            alert("Email sent to: ",emailAddress, ",Please Check your mailbox to reset your password")
+            var body = "Email sent to: "+emailAddress+ ",Please Check your mailbox to reset your password"
+            modalStatechange(true,null,null,body)
             // Email sent.
           }).catch(function(error) {
             // An error happened.
-            alert('There is no user record corresponding to this identifier. Please check the email again!')
+            var body='There is no user record corresponding to this identifier. Please check the email again!'
+            modalStatechange(true,null,null,body)
+             
           });
         }
           )
@@ -56,16 +86,14 @@ export const logbtnfuction = ()=>{
         auth.onAuthStateChanged(firebaseUser=>{
           if(firebaseUser){
             if(!firebaseUser.emailVerified){
-              alert('Your account has not been verified, please check your mailbox to verify it!')
+              modalStatechange(true,null,null,"Your account has not been verified, please check your mailbox to verify it!")
               firebaseUser.sendEmailVerification().then(function() {
-                console.log("email sent")
                 firebase.auth().signOut()
               }).catch(function(error) {
                 console.log(error)})
             }
             else{
-            window.alert("Login successed!")
-            window.location.assign("/index")
+            modalStatechange(true,()=>{window.location.assign("/index")},'Success',"Login successed!")
             }
           }else{
           }
@@ -77,7 +105,6 @@ export const logbtnfuction = ()=>{
             var token = result.credential.accessToken;
             // The signed-in user info.
             var user = result.user;
-            console.log("successed", user)
             // ...
           }).catch(function(error) {
             // Handle Errors here.
@@ -89,7 +116,7 @@ export const logbtnfuction = ()=>{
             var credential = error.credential;
             console.log(error)
             var Msg = "Login failed, please try another way to Login with " + email
-            alert(Msg)
+            modalStatechange(true, null, null,Msg)
           });
         })
         btngg.addEventListener("click", e=>{

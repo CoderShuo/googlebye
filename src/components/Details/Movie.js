@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
 const hctext = " No hotcomment yet, try to be the first one. :)"
 export const Movie=(movie,hotcomment)=>{
-
+    for (var key in movie) {
+        if (!movie[key]) {
+            movie[key]=[];
+        }
+    }
         return (
         <div className="top">
         <div className="header">

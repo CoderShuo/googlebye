@@ -3,6 +3,7 @@ import {API_BASE_URL,CONTENT_BASE_URL, SEARCH_BASE_URL, IMG_ENDPOINT} from './se
 export const FetchData = (page, query,sort)=>{
     var url = query ? (SEARCH_BASE_URL+'&page='+page).replace('%query%',query):(API_BASE_URL+'&page='+page).replace('%desc%',sort)
     var moviearr = []
+    var maxpage = 0
     return(
     fetch(url,{
         headers:{
@@ -10,7 +11,9 @@ export const FetchData = (page, query,sort)=>{
         "Referer": 'https://developer.mozilla.org',}
     })
     .then(response=>response.json())
-    .then(data=>data.results)
+    .then(data=>{
+        maxpage = data.total_pages
+        return data.results})
     .then(movies=>{
         movies.map(movie=>{
         moviearr.push({
@@ -20,7 +23,7 @@ export const FetchData = (page, query,sort)=>{
             'score':movie.vote_average,
         })
       })
-        return moviearr
+        return [moviearr,maxpage]
     }
     ))
 }

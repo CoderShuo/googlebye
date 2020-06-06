@@ -8,7 +8,7 @@ import Navigator from '../Mainpage/Navigator'
 import { Movie } from './Movie';
 
 const ctext = "No user comments available, feel free to comment"
-
+const defaultimg = "https://www.palmkvistmaleri.se/wp-content/uploads/2018/02/default.jpg"
 class Moviedetail extends Component {
 
   render(){
@@ -25,7 +25,7 @@ class Moviedetail extends Component {
         color="#cc4e87"
         height={100}
         width={100}
-        timeout={3000} //3 secs
+        timeout={10000} //3 secs
      />
      <span>The movie is on the way...</span>
      </div>
@@ -78,17 +78,18 @@ class Moviedetail extends Component {
         var starclassName = "rate"+ comment.rate
         if(currentUser){
           var deleteclassName = currentUser.uid==updatedcomments[index].user.id? "delete": "delete vanish"
+          var likeclassName = comments[index].liked_by.indexOf(currentUser.uid)>-1 ? "likedetail liked_cliked" : "likedetail liked_uncliked"
         }
         return (
         <div className="usercomments" id={index} key={index}>
           <div className="commentinfo">
-            <img className="profile" src={comment.user.profile_url}
+            <img className="profile" src={comment.user.profile_url?comment.user.profile_url:defaultimg}
                   width="30" height="30"/>
             <div className="wrap-comment">
             <div className="wrap">
               <div className="indexinfo">
               <span>
-              <b>{comment.user.screen_name}</b>:
+              <b>{comment.user.screen_name?comment.user.screen_name:"Anonymous"}</b>:
               commented at {comment.created_at}</span>
               <span className={"allstarrating"+" "+starclassName}></span>
               <a className={deleteclassName}
@@ -98,10 +99,10 @@ class Moviedetail extends Component {
             <div className="contentdetail">
               <div className="maincontent">{comment.text}</div>
             </div>
-          <div className="likecount"><div className="likedetail"><i className='lite-icon' onClick={()=>{
+          <div className="likecount"><div className={likeclassName}><i className='lite-icon' onClick={()=>{
                       this.props.likefun(index,comments)
                     }
-                      }></i>{'   '}{comment.like_count}{'   '}like</div></div>
+                      }></i>{'   '}{comment.liked_by.length}{'   '}like</div></div>
         </div>
         </div>
         </div>

@@ -1,11 +1,17 @@
-.container{
-  text-align: center;
-  height: 900px;
+
+center{
+  vertical-align: middle;
+}
+
+
+.mainpagecontainer{
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
 }
 header{
     padding: 20px 20px;
-    background-image: url('../images/bg-01.jpg');;
-    height: auto; 
+    height: 40px; 
     width:100%;
     margin-left: 0;
     background:#e68eb6;
@@ -13,40 +19,44 @@ header{
     top: 0;
     margin-bottom: 20px;
     min-width: 776px;
+    box-sizing: unset;
 }
 
 header ul{
-    width: auto;
     list-style-type: none;
     white-space:nowrap;
     overflow: hidden;
     margin-left: 5%;
     padding: 0;
-
+    cursor: pointer;
+}
+.options{
+  width: 150px;
 }
 header li {
     float:left; 
     margin-right:2%; 
     position: relative;
     overflow: hidden;
+    width: auto;
 }
 
 header li a{
-    display: block; 
+    display: flex; 
     color:white;
-    text-align: center;
+    text-align: left;
     padding: 3px;
     overflow: hidden;
     text-decoration: none; 
-    
+    width: fit-content;
 }
-header li a:hover{
-    background-color: #111;
+header li ul li:hover{
+    background-color: rgba(41, 43, 44, 0.5);
 }
 
 header ul li ul{
     margin-left: -0.2px;
-    background:rgb(189, 181, 181);
+    background: #ffffff;
     position: relative;
     display: none;
 
@@ -54,11 +64,15 @@ header ul li ul{
 header ul li ul li{
     float:none;
     text-align: center;
+    display: list-item;
 }
 header ul li:hover ul{
     display: block;
 }
 
+.mainoptions{
+  color: #fff;
+}
 
 body{
     background:#eff3f5;
@@ -66,8 +80,16 @@ body{
     line-height: 1.2;
 }
 
+header b{
+  font-size: 20px;
+}
 
-
+#root{
+  height: 100%;
+}
+.loadcontainer{
+  height: 100%;
+}
 .searchbox{
   display: inline-block;
 }
@@ -75,7 +97,8 @@ body{
 .searchbutton{
   background-color: #cc4e87;
   color: white;
-  padding: 15px 32px;
+  padding: 10px 32px;
+  margin-left: 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -94,7 +117,8 @@ body{
 }
 
 .username{
-  color: #2c0657;
+  color: #fff;
+  font-weight: bold;
 }
 
 ul{
@@ -144,12 +168,19 @@ select{
   vertical-align: top;
 }
 
+.bottompart{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
 footer{
     margin-top:3px ;
     bottom:0;
     width:100%;
     height:100px;
     background:#e68eb6;
+    text-align: center;
     /* background-image: url('../images/bg-01.jpg');; */
 }
 .aboutcontent{
@@ -180,6 +211,9 @@ footer{
 
 .pagepart{
   display: inline-block;
+  margin-bottom: 10px;
+  margin-left: 2px;
+  width: 100%;
 }
 
 .pagebutton{
