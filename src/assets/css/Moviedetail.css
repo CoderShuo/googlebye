@@ -1,5 +1,13 @@
+body{
+    background-color: aliceblue;
+}
 
-
+.top{
+    margin-left: 30px;
+}
+.under{
+    margin-left: 30px;
+}
 .detailpage{
     margin-top: 150px;
 }
@@ -45,6 +53,7 @@
 .descotent{
     font-style: italic;
 }
+
 .userlogo{
     text-align: left;
     font-size: 15px;
@@ -85,7 +94,7 @@ span{
 .user-comment{
     padding-left: 10px;
     text-align: left;
-
+    margin-bottom: 100px;    
 }
 
 .editcomment{

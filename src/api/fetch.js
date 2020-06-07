@@ -1,7 +1,7 @@
 import {API_BASE_URL,CONTENT_BASE_URL, SEARCH_BASE_URL, IMG_ENDPOINT} from './setting'
 
 export const FetchData = (page, query,sort)=>{
-    var url = query ? (SEARCH_BASE_URL+'&page='+page).replace('%query%',query):(API_BASE_URL+'&page='+page).replace('%desc%',sort)
+    var url = (query && query!="null") ? (SEARCH_BASE_URL+'&page='+page).replace('%query%',query):(API_BASE_URL+'&page='+page).replace('%desc%',sort)
     var moviearr = []
     var maxpage = 0
     return(

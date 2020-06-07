@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import About from '../../Others/about'
+import About from '../../Others/About'
 import { Link } from 'react-router-dom';
 
 class Footer extends Component {

@@ -2,8 +2,12 @@
 import React, {Component} from 'react';
 import * as firebase from 'firebase'
 import {ModalTip, ModalConfirm} from '../Modal'
+import {ChangeSort, ChangeQuery} from './actions'
+import { connect } from "react-redux"
+
 
 const defaultimg = "https://www.palmkvistmaleri.se/wp-content/uploads/2018/02/default.jpg"
+
 class Navigator extends Component {
     constructor(props){
       super(props)
@@ -22,7 +26,7 @@ class Navigator extends Component {
       var tartId = window.location.href.split("/").pop()
       var cn = (tartId!=='index')? 'vanish':''
       var searchcn = "searchbox" +' '+cn
-      if(this.state.displayName==="unlogin")
+      if(this.state.displayName==="unlogin"|| !this.state.displayName)
       {
         return(
         <header>
@@ -30,21 +34,22 @@ class Navigator extends Component {
           <ul>
             <li className="searchpage" onClick={()=>Backtosearch()}><b>GoogleBye</b></li>
             <li className={cn}>
-            <a style={{"color":"#fff", "font-weight":"bold"}}>Sort</a>
+            <a style={{"color":"#fff", "fontWeight":"bold"}}>Sort</a>
             <div className="options">
-              <ul><li onClick={()=>this.props.changesort('primary_release_date.asc')}>Old</li>
-              <li onClick={()=>this.props.changesort('popularity.desc')}>Popular</li>
-              <li onClick={()=>this.props.changesort('vote_count.desc')}>Vote Count</li>
-              </ul>
+              <ul>
+              <li onClick={()=>this.props.ChangeSort('vote_count.desc')}>Old</li>
+               <li onClick={()=>this.props.ChangeSort('popularity.desc')}>Popular</li>
+               <li onClick={()=>this.props.ChangeSort('primary_release_date.asc')}>Vote Count</li>
+             </ul>
               </div>
             </li>
           </ul>
           <div className= {searchcn}>
           <input className="searchedit" id="searchbox" placeholder="Search movies"></input>
-          <button className= 'searchbutton' id="searchbtn">Search</button>
+          <button className= 'searchbutton' id="searchbtn" onClick={()=>this.props.ChangeQuery()}>Search</button>
           </div>
           <div className="userinfo">
-          <a href="/login" style={{"color":"#fff","font-weight":"bold"}}>Login</a>
+          <a href="/login" style={{"color":"#fff","fontWeight":"bold"}}>Login</a>
           </div>
         </center>
       </header>
@@ -58,21 +63,24 @@ class Navigator extends Component {
           <ul>
             <li className="searchpage" onClick={()=>Backtosearch()}><b>GoogleBye</b></li>
             <li className={cn}>
-            <a style={{"color":"#fff", "font-weight":"bold"}}>Sort</a>
+            <a style={{"color":"#fff", "fontWeight":"bold"}}>Sort</a>
             <div className="options">
-              <ul><li onClick={()=>this.props.changesort('primary_release_date.asc')}>Old</li>
-              <li onClick={()=>this.props.changesort('popularity.desc')}>Popular</li>
-              <li onClick={()=>this.props.changesort('vote_count.desc')}>Vote Count</li>
+              <ul><li onClick={()=>this.props.ChangeSort('primary_release_date.asc')}>Old</li>
+              <li onClick={()=>this.props.ChangeSort('popularity.desc')}>Popular</li>
+              <li onClick={()=>this.props.ChangeSort('vote_count.desc')}>Vote Count</li>
               </ul>
               </div>
             </li>
               <li onClick={()=>{
                 this.setState({showModal:true})}}>
-                <a style={{"color":"#fff", "font-weight":"bold"}}>Logout</a></li>
+                <a style={{"color":"#fff", "fontWeight":"bold"}}>Logout</a></li>
           </ul>
           <div className= {searchcn}>
           <input className="searchedit" id="searchbox" placeholder="Search movies"></input>
-          <button className= 'searchbutton' id="searchbtn">Search</button>
+          <button 
+              className= 'searchbutton' 
+              id="searchbtn" 
+              onClick={()=>this.props.ChangeQuery()}>Search</button>
           </div>
           <div className="userinfo">
           <img className = "userimg" src={this.state.displayimg} width="40px"/>
@@ -88,10 +96,10 @@ class Navigator extends Component {
 
     componentDidMount(){
       var searchbtn = document.getElementById("searchbtn")
-      searchbtn.addEventListener('click',()=>{
-        var query = document.getElementById("searchbox").value
-        this.props.funsearch(query,1)
-      })
+      // searchbtn.addEventListener('click',()=>{
+      //   var query = document.getElementById("searchbox").value
+      //   this.props.funsearch(query,1)
+      // })
 
       var searchbox = document.getElementById("searchbox")
       searchbox.addEventListener("keyup", function(event) {
@@ -105,7 +113,6 @@ class Navigator extends Component {
       });
 
       firebase.auth().onAuthStateChanged(firebaseUser=>{
-        console.log(firebaseUser)
         if(firebaseUser){
           if(!firebaseUser.displayName){
             this.setState({displayName:"Anonymous", displayimg:defaultimg})
@@ -137,6 +144,16 @@ const Backtosearch=()=>{
   window.location.assign("/index")
 }
 
+const mapDispatchToProps = dispatch => ({
+  ChangeSort: sort => dispatch(ChangeSort(sort)),
+  ChangeQuery: () => {
+    var q = document.getElementById("searchbox").value
+    dispatch(ChangeQuery(q))}
+})
 
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Navigator)
   
-export default Navigator

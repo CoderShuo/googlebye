@@ -21,6 +21,7 @@ class DetailContainer extends Component {
    }
 
     render(){
+
         return(
           <>
             <Moviedetail movie={this.state.movie} hotcomment={this.state.hotcomment}

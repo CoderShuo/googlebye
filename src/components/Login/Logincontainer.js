@@ -4,7 +4,7 @@ import * as firebase from 'firebase'
 
 
 export const logbtnfuction = (modalStatechange,confun)=>{
-        console.log(modalStatechange)
+ 
         // Get elements
         const txtEmail = document.getElementById('txtEmail')
         const txtPassword = document.getElementById('txtPassword')

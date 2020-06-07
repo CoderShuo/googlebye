@@ -94,7 +94,9 @@ class Moviedetail extends Component {
               <span className={"allstarrating"+" "+starclassName}></span>
               <a className={deleteclassName}
                 id="deletecomment" 
-                onClick={()=>this.props.ondelete(index)}>delete</a>
+                onClick={()=>this.props.ondelete(index)}
+                style = {{"color":"red","textDecoration":"underline"}}
+                >delete</a>
             </div>
             <div className="contentdetail">
               <div className="maincontent">{comment.text}</div>

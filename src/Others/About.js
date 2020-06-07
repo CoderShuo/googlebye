@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-export default function About(){
-return (
-<div className='aboutcontent'>
+
+const About=()=>{
+return (<div className='aboutcontent'>
     <h2>About</h2> 
     <p>
         This application is based on TMDB, using React framework and firebase as the backend,
@@ -14,3 +14,5 @@ return (
     </p>
 </div>)
 }
+
+export default About
